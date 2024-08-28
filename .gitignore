@@ -1,0 +1,30 @@
+# Gradle files
+.gradle/
+build/
+out/
+
+# Java class files
+*.class
+
+# IDE specific files
+*.iml
+*.idea/
+*.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Application-specific files
+*.jar
+*.war
+
+# Local configuration files
+local.properties
+
+# Others
+*.swp
+*.swo
