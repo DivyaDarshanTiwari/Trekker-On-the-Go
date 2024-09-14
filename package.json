@@ -1,0 +1,13 @@
+{
+  "name": "trekker-on-the-go",
+  "version": "1.0.0",
+  "description": "## Overview Trekker On the Go is a project designed to manage transportation logistics for university students.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
