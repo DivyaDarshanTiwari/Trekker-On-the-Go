@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/student_sign_up", async (req, res) => {
+router.post('/sign_up', async (req, res) => {
   const { passangerName, studentID, passangerEmail, phoneNo, password } =
     req.body;
 

@@ -4,6 +4,7 @@ const express = require('express');
 // Initializing the express Router
 const router = express.Router();
 
+
 // Defining a POST route for '/role'
 router.post('/role', async (req, res) => {
   try {
@@ -11,7 +12,7 @@ router.post('/role', async (req, res) => {
       const {role} = req.body;
 
       // Checking if the role is 'driver'
-      if(role === 'driver') {
+      if(role.toLowerCase() === 'driver') {
         // Responding with a status of 201 and a message indicating the role is 'Driver'
         res.status(201).json({msg : "Driver"});
       } else {
