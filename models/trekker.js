@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema({
+const driverSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   name: String,
   price: Number,
@@ -12,4 +12,4 @@ const productSchema = mongoose.Schema({
   maxCapacity: Number,
 });
 
-module.exports = mongoose.model("Driver_Data", productSchema);
+module.exports = mongoose.model("Driver_Data", driverSchema);
