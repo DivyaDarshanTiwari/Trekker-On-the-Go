@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+const studentSchema = mongoose.Schema({
   name: String,
   studentID: String,
   passangerEmail: String,
@@ -9,4 +8,4 @@ const productSchema = mongoose.Schema({
   password: String,
 });
 
-module.exports = mongoose.model("Passenger_Data", productSchema);
+module.exports = mongoose.model("Passenger_Data", studentSchema);
