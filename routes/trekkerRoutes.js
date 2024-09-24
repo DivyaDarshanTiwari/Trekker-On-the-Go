@@ -2,23 +2,25 @@ const express = require("express");
 const router = express.Router();
 const Driver = require('../models/trekker');
 
-router.post("/driver_sign_up", async (req, res) => {
-  const {driverName, driverID, driverEmail, phoneNo, password, LicensePlate, maxCapacity} = req.body;
+router.post("/sign_up", async (req, res) => {
+  const {name, driverID, driverEmail, phoneNo, password, LicensePlate, maxCapacity} = req.body;
+
+  console.log(req.body);
 
   try {
     // Check if all required fields are provided (phoneNo is optional)
-    if (!driverName || !driverID || !driverEmail || !phoneNo || !password || !LicensePlate || !maxCapacity) {
+    if (!name || !driverID || !driverEmail || !phoneNo || !password || !LicensePlate || !maxCapacity) {
       res
         .status(400)
         .json({ msg: "Please fill all required fields" });
     }
-    const existingDriver = await Driver.findOne({driverEmail});
+    const existingDriver = await Driver.findOne({driverEmail:driverEmail});
+    console.log(existingDriver);
     if(existingDriver) {
       return res.status(400).json({msg:"Passenger with this email already exists"});
     }
-    const newDriver = new Passenger({
-      _id: new mongoose.Types.ObjectId(),  // Manually assign an _id (optional)
-      drivername,
+    const newDriver = new Driver({
+      name,
       driverID,
       driverEmail,
       phoneNo,
