@@ -5,23 +5,26 @@ const Passenger = require('../models/student');
 router.post('/sign_up', async (req, res) => {
   const { name, studentID, passangerEmail, phoneNo, password } = req.body;
 
+  console.log(name,studentID,passangerEmail,phoneNo,password);
+
   try {
     // Check if all required fields are provided (phoneNo is optional)
     if(!name || !studentID || !passangerEmail || !phoneNo || !password) {
       return res.status(400).json({msg:"Please fill all required fields"});
     }
-    const existingPassenger = await Passenger.findOne({passengerEmail});
+    const existingPassenger = await Passenger.findOne({passengerEmail:passangerEmail});
+    console.log(existingPassenger);
     if(existingPassenger) {
       return res.status(400).json({msg:"Passenger with this email already exists"});
     }
     const newPassenger = new Passenger({
-      _id: new mongoose.Types.ObjectId(),  // Manually assign an _id (optional)
       name,
       studentID,
       passangerEmail,
       phoneNo,
       password
     })
+    console.log(newPassenger);
     await newPassenger.save();
     res.status(201).json({msg:"Passenger registered successfully"});
   } catch (error) {
