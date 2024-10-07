@@ -17,7 +17,7 @@ router.post("/sign_up", async (req, res) => {
     const existingDriver = await Driver.findOne({driverEmail:driverEmail});
     console.log(existingDriver);
     if(existingDriver) {
-      return res.status(400).json({msg:"Passenger with this email already exists"});
+      return res.status(400).json({msg:"Driver with this email already exists"});
     }
     const newDriver = new Driver({
       name,
@@ -29,7 +29,7 @@ router.post("/sign_up", async (req, res) => {
       maxCapacity
     })
     await newDriver.save();
-    res.status(201).json({msg:"Passenger registered successfully"});
+    res.status(201).json({msg:"Driver registered successfully"});
   } catch (error) {
     // Log the error and return server error response
     console.error(error);
