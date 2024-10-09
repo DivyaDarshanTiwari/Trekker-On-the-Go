@@ -22,7 +22,6 @@ app.use(bodyParser.json())
 //     })
 
 // Manage a route | localhost:3000/products
-app.use('/', roleRoute)
 app.use('/student', studentRoute)
 app.use('/driver',trekkerRoute)
 
