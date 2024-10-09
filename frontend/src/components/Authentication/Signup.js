@@ -5,6 +5,7 @@ const Signup = () => {
     const [show, setShow] = useState(false);
     const [name, setName] = useState();
     const [email, setEmail] = useState();
+    const [sapid, setSapid] = useState();
     const [password, setPassword] = useState();
     const [confirmpassword, setConfirmpassword] = useState();
 
@@ -26,6 +27,13 @@ const Signup = () => {
                 <Input
                     placeholder='Enter Your Email'
                     onChange={(e)=>setEmail(e.target.value)}
+                />
+            </FormControl>
+            <FormControl id='sapid' isRequired>
+                <FormLabel>SAP ID</FormLabel>
+                <Input
+                    placeholder='Enter SAP ID'
+                    onChange={(e)=>setSapid(e.target.value)}
                 />
             </FormControl>
             <FormControl id='password' isRequired>
