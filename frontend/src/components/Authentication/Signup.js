@@ -34,7 +34,7 @@ const Signup = () => {
                     <Input
                         type={show ? 'text' : 'password'}
                         placeholder='Enter Your Password'
-                        onChange={(e)=>setEmail(e.target.value)}
+                        onChange={(e)=>setPassword(e.target.value)}
                     />
                     <InputRightElement>
                         <Button h={'1.75rem'} size={'sm'} onClick={handleClick}>
@@ -49,7 +49,7 @@ const Signup = () => {
                     <Input
                         type={show ? 'text' : 'password'}
                         placeholder='Confirm Password'
-                        onChange={(e)=>setEmail(e.target.value)}
+                        onChange={(e)=>setConfirmpassword(e.target.value)}
                     />
                     <InputRightElement>
                         <Button h={'1.75rem'} size={'sm'} onClick={handleClick}>
