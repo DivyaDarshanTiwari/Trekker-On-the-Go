@@ -1,9 +1,16 @@
-import { Button } from '@chakra-ui/react';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Homepage from './Pages/Homepage';
+import Trekkerpage from './Pages/Trekkerpage';
 
 function App() {
   return (
-    <Button colorScheme='blue'>Button</Button>
+    <div className="App">
+      <Routes>
+        <Route path='/' Component={Homepage} exact />
+        <Route path='/trekker' Component={Trekkerpage} />
+      </Routes>
+    </div>
   );
 }
 
