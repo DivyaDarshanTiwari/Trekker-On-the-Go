@@ -12,6 +12,7 @@ router.post("/sign_up", async (req, res) => {
     password,
     LicensePlate,
     maxCapacity,
+    role,
   } = req.body;
 
   console.log(req.body);
@@ -25,7 +26,8 @@ router.post("/sign_up", async (req, res) => {
       !phoneNo ||
       !password ||
       !LicensePlate ||
-      !maxCapacity
+      !maxCapacity ||
+      !role
     ) {
       res.status(400).json({ msg: "Please fill all required fields" });
     }
@@ -44,6 +46,7 @@ router.post("/sign_up", async (req, res) => {
       password,
       LicensePlate,
       maxCapacity,
+      role,
     });
     await newDriver.save();
     res.status(201).json({ msg: "Driver registered successfully" });
