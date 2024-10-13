@@ -1,9 +1,10 @@
 import { Box, Container, TabList, TabPanels, TabPanel, Tabs, Tab, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import Login from '../components/Authentication/Login'
 import Signup from '../components/Authentication/Signup'
 
 const Homepage = () => {
+    const [tabIndex, setTabIndex] = useState(0);
     return (
         <Container maxW={'xl'} centerContent>
             <Box
@@ -21,7 +22,7 @@ const Homepage = () => {
                 </Text>
             </Box>
             <Box bg={'white'} w={'100%'} p={4} borderRadius={'lg'} color={'black'} borderWidth={'1px'}>
-                <Tabs variant='soft-rounded'>
+                <Tabs variant='soft-rounded' index={tabIndex} onChange={(index) => setTabIndex(index)}>
                 <TabList mb={'1em'}>
                     <Tab width={'50%'}>Log In</Tab>
                     <Tab width={'50%'}>Sign Up</Tab>
@@ -31,7 +32,7 @@ const Homepage = () => {
                     <Login />
                     </TabPanel>
                     <TabPanel>
-                    <Signup />
+                    <Signup setTabIndex={setTabIndex} /> {/* Passing setTabIndex to Signup */}
                     </TabPanel>
                 </TabPanels>
                 </Tabs>

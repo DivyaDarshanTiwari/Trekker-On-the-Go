@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 
-const Signup = () => {
+const Signup = ({ setTabIndex }) => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -38,7 +38,7 @@ const Signup = () => {
           "Content-Type": "application/json",
         },
       };
-      if(license) {
+      if(role === "Driver") {
         const { data } = await axios.post(
           "http://localhost:5000/driver/sign_up",
           { name, email, id, phone, role, license, capacity, password },
@@ -55,6 +55,7 @@ const Signup = () => {
         console.log("User Registered Successfully: ", data);
         window.location.href = "/login";
       }
+      setTabIndex(0); //Switching to Login tab after successfully signing up
     } catch (error) {
       console.error("Error during signup: ", error);
     }
