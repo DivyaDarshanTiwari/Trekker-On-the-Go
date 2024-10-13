@@ -27,6 +27,39 @@ const Signup = () => {
 
   const handleClick = () => setShow(!show);
 
+  const submitHandler = async () => {
+    if(password != confirmpassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      if(license) {
+        const { data } = await axios.post(
+          "http://localhost:5000/driver/sign_up",
+          { name, email, id, phone, role, license, capacity, password },
+          config
+        );
+        console.log("User Registered Successfully: ", data);
+        window.location.href = "/login";
+      } else {
+        const { data } = await axios.post(
+          "http://localhost:5000/student/sign_up",
+          { name, email, id, phone, role, password },
+          config
+        );
+        console.log("User Registered Successfully: ", data);
+        window.location.href = "/login";
+      }
+    } catch (error) {
+      console.error("Error during signup: ", error);
+    }
+  };
+
   return (
     <VStack spacing={"5px"} color={"black"}>
       <FormControl id="first-name" isRequired>
