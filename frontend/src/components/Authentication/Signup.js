@@ -11,6 +11,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import axios from "axios";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
@@ -18,15 +19,13 @@ const Signup = () => {
   const [email, setEmail] = useState();
   const [id, setId] = useState();
   const [phone, setPhone] = useState();
-  const [role, setRole] = useState();
+  const [role, setRole] = useState("Passenger");
   const [license, setLicense] = useState();
   const [capacity, setCapacity] = useState();
   const [password, setPassword] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
 
   const handleClick = () => setShow(!show);
-
-  const submitHandler = () => {};
 
   return (
     <VStack spacing={"5px"} color={"black"}>
