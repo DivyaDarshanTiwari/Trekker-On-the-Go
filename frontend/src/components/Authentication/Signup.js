@@ -58,13 +58,6 @@ const Signup = () => {
           onChange={(e) => setPhone(e.target.value)}
         />
       </FormControl>
-      {/* <FormControl id="role" isRequired>
-        <FormLabel>Role (Driver or Passenger)</FormLabel>
-        <Input
-          placeholder="Enter Role"
-          onChange={(e) => setRole(e.target.value)}
-        />
-      </FormControl> */}
       <FormControl as={"fieldset"}>
         <FormLabel as="legend">Select Your Role</FormLabel>
         <RadioGroup defaultValue="Passenger">
