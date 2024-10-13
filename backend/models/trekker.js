@@ -8,6 +8,7 @@ const driverSchema = mongoose.Schema({
   password: String,
   LicensePlate: String,
   maxCapacity: Number,
+  role: String,
 });
 
 module.exports = mongoose.model("Driver_Data", driverSchema);

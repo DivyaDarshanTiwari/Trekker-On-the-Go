@@ -6,6 +6,7 @@ const studentSchema = mongoose.Schema({
   passangerEmail: String,
   phoneNo: Number,
   password: String,
+  role: String,
 });
 
 module.exports = mongoose.model("Passenger_Data", studentSchema);
