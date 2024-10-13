@@ -38,12 +38,13 @@ router.post("/sign_up", async (req, res) => {
         .status(400)
         .json({ msg: "Driver with this email already exists" });
     }
+    const encryptedPassword = await bcrypt.hash(password, 10);
     const newDriver = new Driver({
       name,
       driverID,
       driverEmail,
       phoneNo,
-      password,
+      password: encryptedPassword,
       LicensePlate,
       maxCapacity,
       role,

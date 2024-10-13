@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Passenger = require("../models/student");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
 
 router.post("/sign_up", async (req, res) => {
   const { name, studentID, passangerEmail, phoneNo, password, role } = req.body;
@@ -33,13 +34,16 @@ router.post("/sign_up", async (req, res) => {
     const newPassenger = new Passenger({
       name,
       studentID,
-      passangerEmail: encryptedPassword,
+      passangerEmail,
       phoneNo,
-      password,
+      password: encryptedPassword,
       role,
     });
     console.log(newPassenger);
     await newPassenger.save();
+    const token = jwt.sign({ userId: newPassenger._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
     res.status(201).json({ msg: "Passenger registered successfully" });
   } catch (error) {
     // Log the error and return server error response
