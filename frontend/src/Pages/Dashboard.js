@@ -1,33 +1,160 @@
-import { VStack, Text, Box } from "@chakra-ui/react";
+import { VStack, Text, Box, Divider } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
+  const navigate = useNavigate(); // Use for redirecting if needed
 
   useEffect(() => {
-    // Get the logged-in user details from your server or session
-    axios
-      .get("http://localhost:5000/dashboard")
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data", error);
-      });
-  }, []);
+    // Get the logged-in user details from localStorage or redirect to login if no data
+    const storedUser = localStorage.getItem("User_Data");
+
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      // If no user data found, redirect to login page
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
-    <VStack spacing={4} color="black">
-      <Text fontSize="2xl">User Dashboard</Text>
-      {/* Display user details conditionally based on availability */}
-      {user.name && <Box><Text><strong>Name:</strong> {user.name}</Text></Box>}
-      {user.email && <Box><Text><strong>Email:</strong> {user.email}</Text></Box>}
-      {user.id && <Box><Text><strong>ID:</strong> {user.id}</Text></Box>}
-      {user.phone && <Box><Text><strong>Phone:</strong> {user.phone}</Text></Box>}
-      {user.role && <Box><Text><strong>Role:</strong> {user.role}</Text></Box>}
-      {user.license && user.role === 'Driver' && <Box><Text><strong>License Plate:</strong> {user.license}</Text></Box>}
-      {user.capacity && user.role === 'Driver' && <Box><Text><strong>Capacity:</strong> {user.capacity}</Text></Box>}
+    <VStack
+      spacing={6}
+      align="start"
+      p={8}
+      bg="gray.50"
+      w="full"
+      maxW="600px"
+      borderRadius="lg"
+      boxShadow="lg"
+    >
+      <Text fontSize="3xl" fontWeight="bold" color="teal.600" align="center">
+        User Dashboard
+      </Text>
+
+      {/* Divider for better visual separation */}
+      <Divider borderColor="gray.300" />
+
+      {/* Display user details if available */}
+      {user.name && (
+        <Box
+          w="full"
+          p={4}
+          bg="white"
+          borderRadius="md"
+          boxShadow="md"
+          borderColor="gray.200"
+          borderWidth="1px"
+        >
+          <Text fontSize="lg" fontWeight="bold">
+            Name:
+          </Text>
+          <Text>{user.name}</Text>
+        </Box>
+      )}
+      {user.SAP_DL_ID && (
+        <Box
+          w="full"
+          p={4}
+          bg="white"
+          borderRadius="md"
+          boxShadow="md"
+          borderColor="gray.200"
+          borderWidth="1px"
+        >
+          <Text fontSize="lg" fontWeight="bold">
+            ID:
+          </Text>
+          <Text>{user.SAP_DL_ID}</Text>
+        </Box>
+      )}
+      {user.Email && (
+        <Box
+          w="full"
+          p={4}
+          bg="white"
+          borderRadius="md"
+          boxShadow="md"
+          borderColor="gray.200"
+          borderWidth="1px"
+        >
+          <Text fontSize="lg" fontWeight="bold">
+            Email:
+          </Text>
+          <Text>{user.Email}</Text>
+        </Box>
+      )}
+      {user.phoneNo && (
+        <Box
+          w="full"
+          p={4}
+          bg="white"
+          borderRadius="md"
+          boxShadow="md"
+          borderColor="gray.200"
+          borderWidth="1px"
+        >
+          <Text fontSize="lg" fontWeight="bold">
+            Phone:
+          </Text>
+          <Text>{user.phoneNo}</Text>
+        </Box>
+      )}
+      {user.role && (
+        <Box
+          w="full"
+          p={4}
+          bg="white"
+          borderRadius="md"
+          boxShadow="md"
+          borderColor="gray.200"
+          borderWidth="1px"
+        >
+          <Text fontSize="lg" fontWeight="bold">
+            Role:
+          </Text>
+          <Text>{user.role}</Text>
+        </Box>
+      )}
+
+      {/* Conditionally display driver details */}
+      {user.role === "Driver" && (
+        <>
+          {user.LicensePlate && (
+            <Box
+              w="full"
+              p={4}
+              bg="white"
+              borderRadius="md"
+              boxShadow="md"
+              borderColor="gray.200"
+              borderWidth="1px"
+            >
+              <Text fontSize="lg" fontWeight="bold">
+                License Plate:
+              </Text>
+              <Text>{user.LicensePlate}</Text>
+            </Box>
+          )}
+          {user.maxCapacity && (
+            <Box
+              w="full"
+              p={4}
+              bg="white"
+              borderRadius="md"
+              boxShadow="md"
+              borderColor="gray.200"
+              borderWidth="1px"
+            >
+              <Text fontSize="lg" fontWeight="bold">
+                Capacity:
+              </Text>
+              <Text>{user.maxCapacity}</Text>
+            </Box>
+          )}
+        </>
+      )}
     </VStack>
   );
 };
