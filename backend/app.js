@@ -123,7 +123,7 @@ app.post("/login", async (req, res, next) => {
   }
 });
 
-app.use("/student", authenticateToken, passagerRoleVerify, studentRoute);
+app.use("/passenger", authenticateToken, passagerRoleVerify, studentRoute);
 app.use("/driver", authenticateToken, driverRoleVerify, trekkerRoute);
 
 module.exports = app;
