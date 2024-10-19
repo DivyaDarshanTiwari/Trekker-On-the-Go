@@ -24,4 +24,32 @@ const authenticateToken = (req, res, next) => {
   }
 };
 
-module.exports = authenticateToken;
+const passagerRoleVerify = (req, res, next) => {
+  try {
+    const { role } = req.body;
+    if (role.toLowerCase() === "passenger") {
+      console.log("Passenger logged in");
+      next();
+    } else {
+      return res.status(400).json({ msg: "Only passenger are authorized" });
+    }
+  } catch (err) {
+    console.log("Some error in the passenger role \n" + err);
+  }
+};
+
+const driverRoleVerify = (req, res, next) => {
+  try {
+    const { role } = req.body;
+    if (role.toLowerCase() === "driver") {
+      console.log("Passenger logged in");
+      next();
+    } else {
+      return res.status(400).json({ msg: "Only driver are authorized" });
+    }
+  } catch (err) {
+    console.log("Some error in the driver role \n" + err);
+  }
+};
+
+module.exports = { authenticateToken, passagerRoleVerify, driverRoleVerify };

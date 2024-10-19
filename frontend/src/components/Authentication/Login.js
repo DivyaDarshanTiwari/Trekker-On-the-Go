@@ -9,30 +9,39 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Login = () => {
   const [show, setShow] = useState(false);
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [Email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleClick = () => setShow(!show);
 
   const submitHandler = async () => {
     try {
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
-        const { data } = await axios.post(
-            "http://localhost:5000/login",
-            { email, password },
-            config
-        );
-        console.log("Login Successful: ", data);
-        window.location.href = "/dashboard";
-    } catch(error) {
-        console.error("Login failed: ", error);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:5000/login",
+        { Email, password },
+        config
+      );
+      console.log("Login Successful: ", data);
+
+      // Navigate to dashboard upon successful login
+      if (data) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.role);
+        localStorage.setItem("User_Data", JSON.stringify(data.data));
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Login failed: ", error);
     }
   };
 

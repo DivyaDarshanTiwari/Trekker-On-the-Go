@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 
 const studentSchema = mongoose.Schema({
+  UID: ObjectId,
   name: String,
-  studentID: String,
-  passangerEmail: String,
+  ID: String,
+  Email: String,
   phoneNo: Number,
   password: String,
   role: String,

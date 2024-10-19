@@ -3,7 +3,7 @@ const app = require("./app");
 const WebSocket = require("ws");
 require("dotenv").config();
 const connectDB = require("./config/db");
-const { initWebSocket } = require("./services/notificationService");
+// const { initWebSocket } = require("./services/notificationService");
 
 connectDB();
 
@@ -27,7 +27,7 @@ const server = http.createServer(app);
 // });
 
 // Initialize WebSocket
-initWebSocket(server);
+// initWebSocket(server);
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

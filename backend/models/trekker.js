@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 
 const driverSchema = mongoose.Schema({
+  UID: ObjectId,
   name: String,
-  driverID: String,
-  driverEmail: String,
+  ID: String,
+  Email: String,
   phoneNo: Number,
   password: String,
   LicensePlate: String,
