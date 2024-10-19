@@ -86,6 +86,25 @@ app.post("/sign_up", async (req, res) => {
       });
       await newDriver.save();
     }
+    return res.status(200).json({ msg: "Succesfull registration" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { Email, password } = req.body;
+  try {
+    const user = await Collective_Data.findOne({ Email });
+    if (!user) {
+      return res.status(400).send("User does not exist.");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send("Invalid password");
+    }
     const token = jwt.sign(
       { userId: Collective_Data._id },
       process.env.JWT_SECRET,
@@ -95,12 +114,9 @@ app.post("/sign_up", async (req, res) => {
     );
     res.status(201).json({ token });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: "Server error" });
+    next(err);
   }
 });
-
-app.post("/login", async (req, res) => {});
 
 app.use("/student", studentRoute);
 app.use("/driver", trekkerRoute);
