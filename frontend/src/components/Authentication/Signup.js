@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = ({ setTabIndex }) => {
   const [show, setShow] = useState(false);
@@ -24,6 +25,7 @@ const Signup = ({ setTabIndex }) => {
   const [maxCapacity, setCapacity] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
+  const navigate = useNavigate();
 
   const handleClick = () => setShow(!show);
 
@@ -61,7 +63,7 @@ const Signup = ({ setTabIndex }) => {
       );
 
       console.log("User Registered Successfully: ", data);
-      window.location.href = "/login"; // Redirect to login page after successful signup
+      navigate("/"); // Redirect to login page after successful signup
       setTabIndex(0); // Switch to Login tab after successfully signing up
     } catch (error) {
       console.error("Error during signup: ", error.response.data); // Log the error response for better debugging
