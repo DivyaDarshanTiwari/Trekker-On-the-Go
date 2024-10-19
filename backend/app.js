@@ -50,7 +50,7 @@ app.post("/sign_up", async (req, res) => {
       const encryptedPassword = await bcrypt.hash(password, 10);
       const newUser = new Collective_Data({
         name,
-        ID,
+        SAP_DL_ID: ID,
         Email,
         phoneNo,
         password: encryptedPassword,
@@ -61,7 +61,7 @@ app.post("/sign_up", async (req, res) => {
       const newPassenger = new Passenger({
         UID: newUser._id,
         name,
-        ID,
+        SAP_DL_ID: ID,
         Email,
         phoneNo,
         password: encryptedPassword,
@@ -79,7 +79,7 @@ app.post("/sign_up", async (req, res) => {
       const encryptedPassword = await bcrypt.hash(password, 10);
       const newUser = new Collective_Data({
         name,
-        ID,
+        SAP_DL_ID: ID,
         Email,
         phoneNo,
         password: encryptedPassword,
@@ -89,7 +89,7 @@ app.post("/sign_up", async (req, res) => {
       const newDriver = new Driver({
         UID: newUser._id,
         name,
-        ID,
+        SAP_DL_ID: ID,
         Email,
         phoneNo,
         password: encryptedPassword,
@@ -110,22 +110,30 @@ app.post("/login", async (req, res) => {
   const { Email, password } = req.body;
   console.log(req.body);
   try {
-    const user = await Collective_Data.findOne({ Email });
+    let user = await Collective_Data.findOne({ Email });
     console.log("user dATA" + user);
     if (!user) {
       return res.status(400).send("User does not exist.");
     }
+    console.log("1");
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log("2" + isMatch);
     if (!isMatch) {
       return res.status(400).send("Invalid password");
     }
+    console.log("3");
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+    console.log("4");
 
-    res.status(200).json({ token: token, role: user.role });
+    if (user.role.toLowerCase() === "driver") {
+      user = await Driver.findOne({ Email });
+    }
+
+    res.status(200).json({ token: token, role: user.role, data: user });
   } catch (err) {
     console.log(err);
   }
