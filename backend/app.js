@@ -106,11 +106,12 @@ app.post("/sign_up", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res, next) => {
+app.post("/login", async (req, res) => {
   const { Email, password } = req.body;
-
+  console.log(req.body);
   try {
     const user = await Collective_Data.findOne({ Email });
+    console.log("user dATA" + user);
     if (!user) {
       return res.status(400).send("User does not exist.");
     }
@@ -120,14 +121,13 @@ app.post("/login", async (req, res, next) => {
     if (!isMatch) {
       return res.status(400).send("Invalid password");
     }
-
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ token });
+    res.status(200).json({ token: token, role: user.role });
   } catch (err) {
-    next(err);
+    console.log(err);
   }
 });
 
