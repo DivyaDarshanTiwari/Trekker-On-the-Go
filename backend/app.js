@@ -5,6 +5,8 @@ const Driver = require("./models/trekker");
 const Collective_Data = require("./models/CollectiveDatabase");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
+
 const {
   authenticateToken,
   passagerRoleVerify,
@@ -16,17 +18,22 @@ const morgan = require("morgan");
 
 const studentRoute = require("./routes/studentRoutes");
 const trekkerRoute = require("./routes/trekkerRoutes");
+const corsOptions = {
+  origin: "http://localhost:3000", // Replace with your frontend URL
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
+  credentials: true, // Allow credentials (cookies, authorization headers)
+  optionsSuccessStatus: 204, // Some legacy browsers choke on 204
+};
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 app.post("/sign_up", async (req, res) => {
   const { name, ID, Email, phoneNo, password, role } = req.body;
 
   try {
-    console.log(req.body);
-
     if (!name || !ID || !Email || !phoneNo || !password || !role) {
       return res.status(400).json({ msg: "Please fill all required fields" });
     }
@@ -49,6 +56,7 @@ app.post("/sign_up", async (req, res) => {
         password: encryptedPassword,
         role,
       });
+      console.log(newUser);
       await newUser.save();
       const newPassenger = new Passenger({
         UID: newUser._id,
