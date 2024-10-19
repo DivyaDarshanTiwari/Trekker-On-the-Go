@@ -93,26 +93,26 @@ app.post("/sign_up", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", async (req, res, next) => {
   const { Email, password } = req.body;
+
   try {
     const user = await Collective_Data.findOne({ Email });
     if (!user) {
       return res.status(400).send("User does not exist.");
     }
 
+    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).send("Invalid password");
     }
-    const token = jwt.sign(
-      { userId: Collective_Data._id },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
-    res.status(201).json({ token });
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ token });
   } catch (err) {
     next(err);
   }
