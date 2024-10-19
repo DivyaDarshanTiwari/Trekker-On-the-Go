@@ -15,20 +15,20 @@ import axios from "axios";
 
 const Signup = ({ setTabIndex }) => {
   const [show, setShow] = useState(false);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [id, setId] = useState();
-  const [phone, setPhone] = useState();
+  const [name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [id, setId] = useState("");
+  const [phoneNo, setPhone] = useState("");
   const [role, setRole] = useState("Passenger");
-  const [license, setLicense] = useState();
-  const [capacity, setCapacity] = useState();
-  const [password, setPassword] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
+  const [LicensePlate, setLicense] = useState("");
+  const [maxCapacity, setCapacity] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
 
   const handleClick = () => setShow(!show);
 
   const submitHandler = async () => {
-    if(password != confirmpassword) {
+    if (password !== confirmpassword) {
       alert("Passwords do not match");
       return;
     }
@@ -38,26 +38,34 @@ const Signup = ({ setTabIndex }) => {
           "Content-Type": "application/json",
         },
       };
-      if(role === "Driver") {
-        const { data } = await axios.post(
-          "http://localhost:5000/driver/sign_up",
-          { name, email, id, phone, role, license, capacity, password },
-          config
-        );
-        console.log("User Registered Successfully: ", data);
-        window.location.href = "/login";
-      } else {
-        const { data } = await axios.post(
-          "http://localhost:5000/student/sign_up",
-          { name, email, id, phone, role, password },
-          config
-        );
-        console.log("User Registered Successfully: ", data);
-        window.location.href = "/login";
+
+      const dataPayload = {
+        name,
+        ID: id, // Corrected field name
+        Email,
+        phoneNo,
+        role,
+        password,
+      };
+
+      // Add additional fields for Driver role
+      if (role === "Driver") {
+        dataPayload.LicensePlate = LicensePlate;
+        dataPayload.maxCapacity = maxCapacity;
       }
-      setTabIndex(0); //Switching to Login tab after successfully signing up
+
+      const { data } = await axios.post(
+        "http://localhost:5000/sign_up",
+        dataPayload,
+        config
+      );
+
+      console.log("User Registered Successfully: ", data);
+      window.location.href = "/login"; // Redirect to login page after successful signup
+      setTabIndex(0); // Switch to Login tab after successfully signing up
     } catch (error) {
-      console.error("Error during signup: ", error);
+      console.error("Error during signup: ", error.response.data); // Log the error response for better debugging
+      alert(error.response?.data?.msg || "An error occurred during signup.");
     }
   };
 
@@ -91,29 +99,36 @@ const Signup = ({ setTabIndex }) => {
           onChange={(e) => setPhone(e.target.value)}
         />
       </FormControl>
-      <FormControl as={"fieldset"}>
+      <FormControl as={"fieldset"} isRequired>
         <FormLabel as="legend">Select Your Role</FormLabel>
-        <RadioGroup defaultValue="Passenger">
+        <RadioGroup
+          defaultValue="Passenger"
+          onChange={setRole} // Update role state on change
+        >
           <HStack spacing="24px">
             <Radio value="Driver">Driver</Radio>
             <Radio value="Passenger">Passenger</Radio>
           </HStack>
         </RadioGroup>
       </FormControl>
-      <FormControl id="license">
-        <FormLabel>License Plate No (for Driver Role)</FormLabel>
-        <Input
-          placeholder="Enter License Plate No"
-          onChange={(e) => setLicense(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="capacity">
-        <FormLabel>Enter Maximum Capacity (for Driver Role)</FormLabel>
-        <Input
-          placeholder="Enter Maximum Capacity"
-          onChange={(e) => setCapacity(e.target.value)}
-        />
-      </FormControl>
+      {role === "Driver" && (
+        <>
+          <FormControl id="license" isRequired>
+            <FormLabel>License Plate No</FormLabel>
+            <Input
+              placeholder="Enter License Plate No"
+              onChange={(e) => setLicense(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="capacity" isRequired>
+            <FormLabel>Maximum Capacity</FormLabel>
+            <Input
+              placeholder="Enter Maximum Capacity"
+              onChange={(e) => setCapacity(e.target.value)}
+            />
+          </FormControl>
+        </>
+      )}
       <FormControl id="password" isRequired>
         <FormLabel>Password</FormLabel>
         <InputGroup>

@@ -3,8 +3,7 @@ const app = require("./app");
 const WebSocket = require("ws");
 require("dotenv").config();
 const connectDB = require("./config/db");
-const { initWebSocket } = require("./services/notificationService");
-const cors = require("cors");
+// const { initWebSocket } = require("./services/notificationService");
 
 connectDB();
 
@@ -28,16 +27,7 @@ const server = http.createServer(app);
 // });
 
 // Initialize WebSocket
-initWebSocket(server);
-
-const corsOptions = {
-  origin: "http://localhost:3000/", // Replace with your frontend URL
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
-  credentials: true, // Allow credentials (cookies, authorization headers)
-  optionsSuccessStatus: 204, // Some legacy browsers choke on 204
-};
-
-app.use(cors(corsOptions));
+// initWebSocket(server);
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
