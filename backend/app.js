@@ -5,7 +5,11 @@ const Driver = require("./models/trekker");
 const Collective_Data = require("./models/CollectiveDatabase");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("./middleware/authMiddleware");
+const {
+  authenticateToken,
+  passagerRoleVerify,
+  driverRoleVerify,
+} = require("./middleware/authMiddleware");
 
 const app = express();
 const morgan = require("morgan");
@@ -119,7 +123,7 @@ app.post("/login", async (req, res, next) => {
   }
 });
 
-app.use("/student", authMiddleware, studentRoute);
-app.use("/driver", authMiddleware, trekkerRoute);
+app.use("/student", authenticateToken, passagerRoleVerify, studentRoute);
+app.use("/driver", authenticateToken, driverRoleVerify, trekkerRoute);
 
 module.exports = app;
