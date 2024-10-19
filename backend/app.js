@@ -100,6 +100,8 @@ app.post("/sign_up", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {});
+
 app.use("/student", studentRoute);
 app.use("/driver", trekkerRoute);
 
