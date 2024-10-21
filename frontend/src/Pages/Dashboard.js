@@ -7,7 +7,9 @@ import {
   Button,
   Link,
   Flex,
+  Icon,
 } from "@chakra-ui/react";
+import { FaUser, FaTools } from "react-icons/fa"; // Add icons for profile and functionality
 import React, { useState, useEffect } from "react";
 import {
   useNavigate,
@@ -19,49 +21,38 @@ import {
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
-  const navigate = useNavigate(); // Use for redirecting if needed
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Get the logged-in user details from localStorage or redirect to login if no data
     const storedUser = localStorage.getItem("User_Data");
-
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
-      // If no user data found, redirect to login page
       navigate("/");
     }
-
-    // Redirecting to profile when landing on Dashboard
     if (location.pathname === "/dashboard") {
       navigate("/dashboard/profile");
     }
   }, [navigate, location]);
 
   return (
-    <Flex
-      justify="center"
-      align="center"
-      minH="100vh"
-      bgGradient="linear(to-r, teal.100, teal.300, teal.500)"
-      p={4}
-    >
+    <Flex justify={"center"} align={"center"} minH={"100vh"} bg={"gray.50"} p={4} w={"full"}>
       <VStack
         spacing={6}
         align="start"
         p={8}
-        bg="white"
+        bg="gray.50"
         w="full"
         maxW="600px"
         borderRadius="lg"
-        boxShadow="2xl"
+        boxShadow="lg"
       >
-        <Text fontSize="4xl" fontWeight="bold" color="teal.600" align="center">
+        <Text fontSize="3xl" fontWeight="bold" color="teal.600" align="center">
           User Dashboard
         </Text>
 
-        {/* Navigation bar */}
+        {/* Enhanced Navigation bar */}
         <HStack
           spacing={8}
           w="full"
@@ -70,205 +61,186 @@ const Dashboard = () => {
           bg="teal.600"
           color="white"
           borderRadius="md"
-          boxShadow="lg"
+          boxShadow="md"
+          position="relative"
         >
           <Link
             as={RouterLink}
             to="/dashboard/profile"
             fontWeight="bold"
-            fontSize="lg"
-            _hover={{ textDecoration: "underline", color: "teal.200" }}
-            transition="color 0.2s"
+            _hover={{ textDecoration: "none", color: "teal.200" }}
+            display="flex"
+            alignItems="center"
           >
+            <Icon as={FaUser} mr={2} />
             Profile
           </Link>
+          <Divider orientation="vertical" borderColor="teal.400" h="24px" />
           <Link
             as={RouterLink}
             to="/dashboard/functionality"
             fontWeight="bold"
-            fontSize="lg"
-            _hover={{ textDecoration: "underline", color: "teal.200" }}
-            transition="color 0.2s"
+            _hover={{ textDecoration: "none", color: "teal.200" }}
+            display="flex"
+            alignItems="center"
           >
+            <Icon as={FaTools} mr={2} />
             Functionality
           </Link>
         </HStack>
 
-        {/* Divider for better visual separation */}
         <Divider borderColor="gray.300" />
 
         <Routes>
           <Route
             path="/profile"
             element={
-              <VStack w="full" spacing={4}>
-                {/* Profile section showing user details */}
+              <>
                 {user.name && (
                   <Box
                     w="full"
                     p={4}
-                    bg="gray.50"
+                    bg="white"
                     borderRadius="md"
                     boxShadow="md"
-                    transition="all 0.3s"
-                    _hover={{ boxShadow: "lg" }}
+                    borderColor="gray.200"
+                    borderWidth="1px"
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Name:
                     </Text>
-                    <Text color="gray.600">{user.name}</Text>
+                    <Text>{user.name}</Text>
                   </Box>
                 )}
                 {user.SAP_DL_ID && (
                   <Box
                     w="full"
                     p={4}
-                    bg="gray.50"
+                    bg="white"
                     borderRadius="md"
                     boxShadow="md"
-                    transition="all 0.3s"
-                    _hover={{ boxShadow: "lg" }}
+                    borderColor="gray.200"
+                    borderWidth="1px"
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       ID:
                     </Text>
-                    <Text color="gray.600">{user.SAP_DL_ID}</Text>
+                    <Text>{user.SAP_DL_ID}</Text>
                   </Box>
                 )}
                 {user.Email && (
                   <Box
                     w="full"
                     p={4}
-                    bg="gray.50"
+                    bg="white"
                     borderRadius="md"
                     boxShadow="md"
-                    transition="all 0.3s"
-                    _hover={{ boxShadow: "lg" }}
+                    borderColor="gray.200"
+                    borderWidth="1px"
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Email:
                     </Text>
-                    <Text color="gray.600">{user.Email}</Text>
+                    <Text>{user.Email}</Text>
                   </Box>
                 )}
                 {user.phoneNo && (
                   <Box
                     w="full"
                     p={4}
-                    bg="gray.50"
+                    bg="white"
                     borderRadius="md"
                     boxShadow="md"
-                    transition="all 0.3s"
-                    _hover={{ boxShadow: "lg" }}
+                    borderColor="gray.200"
+                    borderWidth="1px"
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Phone:
                     </Text>
-                    <Text color="gray.600">{user.phoneNo}</Text>
+                    <Text>{user.phoneNo}</Text>
                   </Box>
                 )}
                 {user.role && (
                   <Box
                     w="full"
                     p={4}
-                    bg="gray.50"
+                    bg="white"
                     borderRadius="md"
                     boxShadow="md"
-                    transition="all 0.3s"
-                    _hover={{ boxShadow: "lg" }}
+                    borderColor="gray.200"
+                    borderWidth="1px"
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Role:
                     </Text>
-                    <Text color="gray.600">{user.role}</Text>
+                    <Text>{user.role}</Text>
                   </Box>
                 )}
 
-                {/* Conditionally display driver details */}
                 {user.role === "Driver" && (
                   <>
                     {user.LicensePlate && (
                       <Box
                         w="full"
                         p={4}
-                        bg="gray.50"
+                        bg="white"
                         borderRadius="md"
                         boxShadow="md"
-                        transition="all 0.3s"
-                        _hover={{ boxShadow: "lg" }}
+                        borderColor="gray.200"
+                        borderWidth="1px"
                       >
                         <Text fontSize="lg" fontWeight="bold">
                           License Plate:
                         </Text>
-                        <Text color="gray.600">{user.LicensePlate}</Text>
+                        <Text>{user.LicensePlate}</Text>
                       </Box>
                     )}
                     {user.maxCapacity && (
                       <Box
                         w="full"
                         p={4}
-                        bg="gray.50"
+                        bg="white"
                         borderRadius="md"
                         boxShadow="md"
-                        transition="all 0.3s"
-                        _hover={{ boxShadow: "lg" }}
+                        borderColor="gray.200"
+                        borderWidth="1px"
                       >
                         <Text fontSize="lg" fontWeight="bold">
                           Capacity:
                         </Text>
-                        <Text color="gray.600">{user.maxCapacity}</Text>
+                        <Text>{user.maxCapacity}</Text>
                       </Box>
                     )}
                   </>
                 )}
-              </VStack>
+              </>
             }
           />
           <Route
             path="/functionality"
             element={
-              <VStack w="full" spacing={4}>
-                {/* Functionality section with buttons */}
-                <Box
-                  w="full"
-                  p={4}
-                  bg="gray.50"
-                  borderRadius="md"
-                  boxShadow="md"
-                  transition="all 0.3s"
-                  _hover={{ boxShadow: "lg" }}
-                >
-                  <Text fontSize="lg" fontWeight="bold" mb={4} color="teal.700">
-                    Functionality
-                  </Text>
-                  <Button
-                    colorScheme="teal"
-                    variant="solid"
-                    mb={2}
-                    w="full"
-                    _hover={{ bg: "teal.500" }}
-                  >
-                    Button 1
-                  </Button>
-                  <Button
-                    colorScheme="teal"
-                    variant="solid"
-                    mb={2}
-                    w="full"
-                    _hover={{ bg: "teal.500" }}
-                  >
-                    Button 2
-                  </Button>
-                  <Button
-                    colorScheme="teal"
-                    variant="solid"
-                    w="full"
-                    _hover={{ bg: "teal.500" }}
-                  >
-                    Button 3
-                  </Button>
-                </Box>
-              </VStack>
+              <Box
+                w="full"
+                p={4}
+                bg="white"
+                borderRadius="md"
+                boxShadow="md"
+                borderColor="gray.200"
+                borderWidth="1px"
+              >
+                <Text fontSize="lg" fontWeight="bold" mb={4}>
+                  Functionality
+                </Text>
+                <Button colorScheme="teal" variant="solid" mb={2} w="full">
+                  Button 1
+                </Button>
+                <Button colorScheme="teal" variant="solid" mb={2} w="full">
+                  Button 2
+                </Button>
+                <Button colorScheme="teal" variant="solid" w="full">
+                  Button 3
+                </Button>
+              </Box>
             }
           />
         </Routes>
