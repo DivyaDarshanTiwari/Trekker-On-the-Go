@@ -7,10 +7,21 @@ router.get("", async (req, res) => {
   return res.status(200).send("Welcome Driver");
 });
 
-router.get("/on-move", (req, res) => {
+router.get("/trekker-go-up", (req, res) => {
   const id = req.driverId;
-  broadcastMessage("A driver is on the move", id);
+  broadcastMessage("A driver is on the move towards the college", id);
   res.json({ msg: "message broadcasted" });
 });
 
+router.get("/reached-college", (req, res) => {
+  const id = req.driverId;
+  broadcastMessage("A driver has reached the college", id);
+  res.json({ msg: "message broadcasted" });
+});
+
+router.get("/trekker-go-down", (req, res) => {
+  const id = req.driverId;
+  broadcastMessage("A driver is on the move from the colleger", id);
+  res.json({ msg: "message broadcasted" });
+});
 module.exports = router;

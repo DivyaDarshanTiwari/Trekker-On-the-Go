@@ -63,7 +63,7 @@ const Signup = ({ setTabIndex }) => {
       );
 
       console.log("User Registered Successfully: ", data);
-      navigate("/"); // Redirect to login page after successful signup
+      navigate("/login"); // Redirect to login page after successful signup
       setTabIndex(0); // Switch to Login tab after successfully signing up
     } catch (error) {
       console.error("Error during signup: ", error.response.data); // Log the error response for better debugging

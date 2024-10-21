@@ -29,7 +29,7 @@ const Dashboard = () => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     } else {
-      navigate("/");
+      navigate("/login");
     }
     if (location.pathname === "/dashboard") {
       navigate("/dashboard/profile");
@@ -37,7 +37,14 @@ const Dashboard = () => {
   }, [navigate, location]);
 
   return (
-    <Flex justify={"center"} align={"center"} minH={"100vh"} bg={"gray.50"} p={4} w={"full"}>
+    <Flex
+      justify={"center"}
+      align={"center"}
+      minH={"100vh"}
+      bg={"gray.50"}
+      p={4}
+      w={"full"}
+    >
       <VStack
         spacing={6}
         align="start"
