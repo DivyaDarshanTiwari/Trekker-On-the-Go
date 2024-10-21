@@ -33,25 +33,31 @@ const Dashboard = () => {
       navigate("/");
     }
 
-    //Redirecting to profile when landing on Dashbaord
+    // Redirecting to profile when landing on Dashboard
     if (location.pathname === "/dashboard") {
       navigate("/dashboard/profile");
     }
   }, [navigate, location]);
 
   return (
-    <Flex justify={"center"} align={"center"} minH={"100vh"} bg={"gray.50"}>
+    <Flex
+      justify="center"
+      align="center"
+      minH="100vh"
+      bgGradient="linear(to-r, teal.100, teal.300, teal.500)"
+      p={4}
+    >
       <VStack
         spacing={6}
         align="start"
         p={8}
-        bg="gray.50"
+        bg="white"
         w="full"
         maxW="600px"
         borderRadius="lg"
-        boxShadow="lg"
+        boxShadow="2xl"
       >
-        <Text fontSize="3xl" fontWeight="bold" color="teal.600" align="center">
+        <Text fontSize="4xl" fontWeight="bold" color="teal.600" align="center">
           User Dashboard
         </Text>
 
@@ -64,12 +70,15 @@ const Dashboard = () => {
           bg="teal.600"
           color="white"
           borderRadius="md"
+          boxShadow="lg"
         >
           <Link
             as={RouterLink}
             to="/dashboard/profile"
             fontWeight="bold"
-            _hover={{ textDecoration: "underline" }}
+            fontSize="lg"
+            _hover={{ textDecoration: "underline", color: "teal.200" }}
+            transition="color 0.2s"
           >
             Profile
           </Link>
@@ -77,7 +86,9 @@ const Dashboard = () => {
             as={RouterLink}
             to="/dashboard/functionality"
             fontWeight="bold"
-            _hover={{ textDecoration: "underline" }}
+            fontSize="lg"
+            _hover={{ textDecoration: "underline", color: "teal.200" }}
+            transition="color 0.2s"
           >
             Functionality
           </Link>
@@ -90,86 +101,86 @@ const Dashboard = () => {
           <Route
             path="/profile"
             element={
-              <>
+              <VStack w="full" spacing={4}>
                 {/* Profile section showing user details */}
                 {user.name && (
                   <Box
                     w="full"
                     p={4}
-                    bg="white"
+                    bg="gray.50"
                     borderRadius="md"
                     boxShadow="md"
-                    borderColor="gray.200"
-                    borderWidth="1px"
+                    transition="all 0.3s"
+                    _hover={{ boxShadow: "lg" }}
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Name:
                     </Text>
-                    <Text>{user.name}</Text>
+                    <Text color="gray.600">{user.name}</Text>
                   </Box>
                 )}
                 {user.SAP_DL_ID && (
                   <Box
                     w="full"
                     p={4}
-                    bg="white"
+                    bg="gray.50"
                     borderRadius="md"
                     boxShadow="md"
-                    borderColor="gray.200"
-                    borderWidth="1px"
+                    transition="all 0.3s"
+                    _hover={{ boxShadow: "lg" }}
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       ID:
                     </Text>
-                    <Text>{user.SAP_DL_ID}</Text>
+                    <Text color="gray.600">{user.SAP_DL_ID}</Text>
                   </Box>
                 )}
                 {user.Email && (
                   <Box
                     w="full"
                     p={4}
-                    bg="white"
+                    bg="gray.50"
                     borderRadius="md"
                     boxShadow="md"
-                    borderColor="gray.200"
-                    borderWidth="1px"
+                    transition="all 0.3s"
+                    _hover={{ boxShadow: "lg" }}
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Email:
                     </Text>
-                    <Text>{user.Email}</Text>
+                    <Text color="gray.600">{user.Email}</Text>
                   </Box>
                 )}
                 {user.phoneNo && (
                   <Box
                     w="full"
                     p={4}
-                    bg="white"
+                    bg="gray.50"
                     borderRadius="md"
                     boxShadow="md"
-                    borderColor="gray.200"
-                    borderWidth="1px"
+                    transition="all 0.3s"
+                    _hover={{ boxShadow: "lg" }}
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Phone:
                     </Text>
-                    <Text>{user.phoneNo}</Text>
+                    <Text color="gray.600">{user.phoneNo}</Text>
                   </Box>
                 )}
                 {user.role && (
                   <Box
                     w="full"
                     p={4}
-                    bg="white"
+                    bg="gray.50"
                     borderRadius="md"
                     boxShadow="md"
-                    borderColor="gray.200"
-                    borderWidth="1px"
+                    transition="all 0.3s"
+                    _hover={{ boxShadow: "lg" }}
                   >
                     <Text fontSize="lg" fontWeight="bold">
                       Role:
                     </Text>
-                    <Text>{user.role}</Text>
+                    <Text color="gray.600">{user.role}</Text>
                   </Box>
                 )}
 
@@ -180,67 +191,84 @@ const Dashboard = () => {
                       <Box
                         w="full"
                         p={4}
-                        bg="white"
+                        bg="gray.50"
                         borderRadius="md"
                         boxShadow="md"
-                        borderColor="gray.200"
-                        borderWidth="1px"
+                        transition="all 0.3s"
+                        _hover={{ boxShadow: "lg" }}
                       >
                         <Text fontSize="lg" fontWeight="bold">
                           License Plate:
                         </Text>
-                        <Text>{user.LicensePlate}</Text>
+                        <Text color="gray.600">{user.LicensePlate}</Text>
                       </Box>
                     )}
                     {user.maxCapacity && (
                       <Box
                         w="full"
                         p={4}
-                        bg="white"
+                        bg="gray.50"
                         borderRadius="md"
                         boxShadow="md"
-                        borderColor="gray.200"
-                        borderWidth="1px"
+                        transition="all 0.3s"
+                        _hover={{ boxShadow: "lg" }}
                       >
                         <Text fontSize="lg" fontWeight="bold">
                           Capacity:
                         </Text>
-                        <Text>{user.maxCapacity}</Text>
+                        <Text color="gray.600">{user.maxCapacity}</Text>
                       </Box>
                     )}
                   </>
                 )}
-              </>
+              </VStack>
             }
           />
           <Route
             path="/functionality"
             element={
-              <>
+              <VStack w="full" spacing={4}>
                 {/* Functionality section with buttons */}
                 <Box
                   w="full"
                   p={4}
-                  bg="white"
+                  bg="gray.50"
                   borderRadius="md"
                   boxShadow="md"
-                  borderColor="gray.200"
-                  borderWidth="1px"
+                  transition="all 0.3s"
+                  _hover={{ boxShadow: "lg" }}
                 >
-                  <Text fontSize="lg" fontWeight="bold" mb={4}>
+                  <Text fontSize="lg" fontWeight="bold" mb={4} color="teal.700">
                     Functionality
                   </Text>
-                  <Button colorScheme="teal" variant="solid" mb={2} w="full">
+                  <Button
+                    colorScheme="teal"
+                    variant="solid"
+                    mb={2}
+                    w="full"
+                    _hover={{ bg: "teal.500" }}
+                  >
                     Button 1
                   </Button>
-                  <Button colorScheme="teal" variant="solid" mb={2} w="full">
+                  <Button
+                    colorScheme="teal"
+                    variant="solid"
+                    mb={2}
+                    w="full"
+                    _hover={{ bg: "teal.500" }}
+                  >
                     Button 2
                   </Button>
-                  <Button colorScheme="teal" variant="solid" w="full">
+                  <Button
+                    colorScheme="teal"
+                    variant="solid"
+                    w="full"
+                    _hover={{ bg: "teal.500" }}
+                  >
                     Button 3
                   </Button>
                 </Box>
-              </>
+              </VStack>
             }
           />
         </Routes>
