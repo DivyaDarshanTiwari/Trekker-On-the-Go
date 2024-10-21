@@ -8,9 +8,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path='/' Component={Homepage} exact />
-        <Route path='/trekker' Component={Trekkerpage} />
-        <Route path='/dashboard' Component={Dashboard} />
+        <Route path='/' element={<Homepage />} exact />
+        <Route path='/trekker' element={<Trekkerpage />} />
+        <Route path='/dashboard/*' element={<Dashboard />} /> {/* Using /* as there are nested routes */}
       </Routes>
     </div>
   );
