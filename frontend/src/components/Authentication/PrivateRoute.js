@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
 
   // If no user data found, redirect to login page
   if (!storedUser) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   // If the user is authenticated, render the children (dashboard or other protected pages)
