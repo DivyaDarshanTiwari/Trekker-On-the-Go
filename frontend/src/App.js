@@ -5,6 +5,7 @@ import Homepage from "./Pages/Homepage";
 import Trekkerpage from "./Pages/Trekkerpage";
 import Dashboard from "./Pages/Dashboard";
 import PrivateRoute from "./components/Authentication/PrivateRoute";
+import Notifications from "./Pages/Notification";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           }
         />{" "}
         {/* Using /* as there are nested routes */}
+        <Route path="/notification" element={<Notifications />} />
       </Routes>
     </div>
   );
