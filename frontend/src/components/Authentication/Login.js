@@ -31,7 +31,7 @@ const Login = () => {
         { Email, password },
         config
       );
-      console.log("Login Successful: ", data);
+      alert(`Login Successful: ${data.role}: ${data.data.name}`);
 
       // Navigate to dashboard upon successful login
       if (data) {
@@ -41,7 +41,7 @@ const Login = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.error("Login failed: ", error);
+      alert("Login failed");
     }
   };
 

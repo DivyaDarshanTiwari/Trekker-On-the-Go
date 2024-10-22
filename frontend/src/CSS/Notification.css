@@ -1,0 +1,84 @@
+/* Notifications container */
+.notifications-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Notification item */
+.notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+.notification:last-child {
+  border-bottom: none;
+}
+
+.notification:hover {
+  background-color: #f1f1f1;
+}
+
+/* Message styling */
+.notification p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Date styling */
+.notification small {
+  color: #999;
+  font-size: 12px;
+}
+
+/* Heading */
+h2 {
+  text-align: center;
+  color: #555;
+}
+
+/* Notification container responsiveness */
+@media only screen and (max-width: 768px) {
+  .notifications-container {
+    width: 95%;
+    padding: 5px;
+  }
+
+  .notification {
+    padding: 10px;
+  }
+
+  .notification p {
+    font-size: 14px;
+  }
+
+  .notification small {
+    font-size: 11px;
+  }
+}
+
+/* Mobile specific styles (up to 480px wide) */
+@media only screen and (max-width: 480px) {
+  .notifications-container {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .notification {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notification small {
+    margin-top: 5px;
+  }
+}

@@ -8,7 +8,7 @@ const initWebSocket = (server) => {
   wss.on("connection", (ws) => {
     console.log("New client connected");
     clients.push(ws);
-    ws.send("Welcome new client");
+    ws.send(JSON.stringify("Welcome new client"));
 
     ws.on("message", function incoming(message) {
       try {
@@ -39,7 +39,11 @@ const initWebSocket = (server) => {
 const broadcastMessage = (message, ws) => {
   clients.forEach((client) => {
     if (client !== ws && client.readyState == WebSocket.OPEN) {
-      client.send(message);
+      const notification = {
+        message: message, // Broadcasted message
+        date: new Date(), // Current timestamp
+      };
+      client.send(JSON.stringify(notification));
     }
   });
 };

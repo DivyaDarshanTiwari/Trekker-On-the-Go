@@ -1,19 +1,17 @@
-// linkedList.js
 class Node {
   constructor(data) {
-    this.data = data; // The student data
-    this.next = null; // Pointer to the next node
+    this.data = data;
+    this.next = null;
   }
 }
 
 class LinkedList {
   constructor() {
-    this.head = null; // Head of the list
-    this.tail = null; // Tail of the list
-    this.size = 0; // Size of the list
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
   }
 
-  // Add a student to the end of the list
   add(data) {
     const newNode = new Node(data);
     if (!this.head) {
@@ -26,16 +24,14 @@ class LinkedList {
     this.size++;
   }
 
-  // Remove a student from the front of the list
   remove() {
-    if (!this.head) return null; // List is empty
+    if (!this.head) return null;
     const removedData = this.head.data;
     this.head = this.head.next;
     this.size--;
     return removedData;
   }
 
-  // Get the current list of students
   getList() {
     const list = [];
     let current = this.head;
