@@ -18,6 +18,7 @@ const authenticateToken = (req, res, next) => {
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
+    console.log(token);
     next();
   } catch (err) {
     res.status(400).send("Invalid Token");
@@ -41,6 +42,7 @@ const passagerRoleVerify = (req, res, next) => {
 const driverRoleVerify = (req, res, next) => {
   try {
     const { role } = req.body;
+    console.log(role);
     if (role.toLowerCase() === "driver") {
       console.log("Passenger logged in");
       next();

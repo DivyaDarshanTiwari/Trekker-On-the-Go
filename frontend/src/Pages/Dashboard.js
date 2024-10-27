@@ -8,9 +8,11 @@ import {
   Link,
   Flex,
   Icon,
+  useToast, //using for feedback
 } from "@chakra-ui/react";
 import { FaUser, FaTools } from "react-icons/fa"; // Add icons for profile and functionality
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   useNavigate,
   Link as RouterLink,
@@ -23,6 +25,7 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("User_Data");
@@ -35,6 +38,39 @@ const Dashboard = () => {
       navigate("/dashboard/profile");
     }
   }, [navigate, location]);
+
+  const handleOnTheGoClick = async() => {
+    try {
+      const driverToken = localStorage.getItem("token");
+      console.log(driverToken);
+      const response = await axios.post(
+        "http://localhost:5000/driver/trekker-go-up",
+        {
+          role: "driver",
+        },
+        {
+          headers: { Authorization: `Bearer ${driverToken}` },
+        }
+      );
+      if(response.data) {
+        toast({
+          title: "Success",
+          description: "Message broadcasted: Driver is on the move.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch(error) {
+      toast({
+        title: "Error!",
+        description: "Failed to broadcast message.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }
 
   return (
     <Flex
@@ -240,7 +276,7 @@ const Dashboard = () => {
                 </Text>
                 {user.role === "Driver" && (
                   <>
-                    <Button colorScheme="teal" variant="solid" mb={2} w="full">
+                    <Button colorScheme="teal" variant="solid" mb={2} w="full" onClick={handleOnTheGoClick}>
                       On the Go
                     </Button>
                   </>
