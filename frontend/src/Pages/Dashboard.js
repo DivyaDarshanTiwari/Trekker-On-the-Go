@@ -238,9 +238,13 @@ const Dashboard = () => {
                 <Text fontSize="lg" fontWeight="bold" mb={4}>
                   Functionality
                 </Text>
-                <Button colorScheme="teal" variant="solid" mb={2} w="full">
-                  Button 1
-                </Button>
+                {user.role === "Driver" && (
+                  <>
+                    <Button colorScheme="teal" variant="solid" mb={2} w="full">
+                      On the Go
+                    </Button>
+                  </>
+                )}
                 <Button colorScheme="teal" variant="solid" mb={2} w="full">
                   Button 2
                 </Button>
