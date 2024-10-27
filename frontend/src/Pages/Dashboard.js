@@ -10,7 +10,7 @@ import {
   Icon,
   useToast, //using for feedback
 } from "@chakra-ui/react";
-import { FaUser, FaTools } from "react-icons/fa"; // Add icons for profile and functionality
+import { FaUser, FaTools, FaBell } from "react-icons/fa"; // Add icons for profile and functionality
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -130,6 +130,25 @@ const Dashboard = () => {
             <Icon as={FaTools} mr={2} />
             Functionality
           </Link>
+
+          {/* Notification section for the passenger */}
+          {user.role === "Passenger" && (
+            <>
+              <Divider orientation="vertical" borderColor="teal.400" h="24px" />
+              <Link
+                as={RouterLink}
+                to="/notification"
+                fontWeight="bold"
+                _hover={{ textDecoration: "none", color: "teal.200" }}
+                display="flex"
+                alignItems="center"
+              >
+                <Icon as={FaBell} mr={2} />
+                Notifications
+              </Link>
+            </>
+          )}
+
         </HStack>
 
         <Divider borderColor="gray.300" />
