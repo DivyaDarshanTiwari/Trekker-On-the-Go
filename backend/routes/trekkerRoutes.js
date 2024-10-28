@@ -2,9 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Driver = require("../models/trekker");
 const { broadcastMessage } = require("../services/notificationService");
-const TekkerLinkedList_At_College = require("../LinkedList/StudentList");
-const TekkerLinkedList_towards_college = require("../LinkedList/StudentList");
-const TekkerLinkedList_from_college = require("../LinkedList/StudentList");
 
 router.post("/trekker-go-up", (req, res) => {
   const id = req.driverId;
