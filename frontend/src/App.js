@@ -24,7 +24,6 @@ function App() {
           }
         />{" "}
         {/* Using /* as there are nested routes */}
-        <Route path="/notification" element={<Notifications />} />
       </Routes>
     </div>
   );

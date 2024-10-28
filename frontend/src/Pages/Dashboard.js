@@ -20,6 +20,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import Notifications from "./Notification";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -168,7 +169,7 @@ const Dashboard = () => {
           <Divider orientation="vertical" borderColor="teal.400" h="24px" />
           <Link
             as={RouterLink}
-            to="/notification"
+            to="/dashboard/notification"
             fontWeight="bold"
             _hover={{ textDecoration: "none", color: "teal.200" }}
             display="flex"
@@ -356,6 +357,11 @@ const Dashboard = () => {
               </Box>
             }
           />
+          <Route
+            path="/notification"
+            element={<Notifications />}
+          >
+          </Route>
         </Routes>
       </VStack>
     </Flex>
