@@ -19,6 +19,9 @@ class TrekkerList {
 
     //adding trekker while logging in
     addTrekker(trekkerId) {
+        //checking if node with same id already exists
+        if(this.trekkerMap[trekkerId]) return ;
+
         const newTrekker = new TrekkerNode(trekkerId);
         this.trekkerMap[trekkerId] = newTrekker;
 

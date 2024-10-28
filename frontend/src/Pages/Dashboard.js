@@ -9,6 +9,9 @@ import {
   Flex,
   Icon,
   useToast, //using for feedback
+  List,
+  ListItem,
+  Spinner,
 } from "@chakra-ui/react";
 import { FaUser, FaTools, FaBell } from "react-icons/fa"; // Add icons for profile and functionality
 import React, { useState, useEffect } from "react";
@@ -24,6 +27,9 @@ import Notifications from "./Notification";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
+  const [availableTrekkers, setAvailableTrekkers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showTrekkers, setShowTrekkers] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
@@ -141,6 +147,37 @@ const Dashboard = () => {
         duration: 5000,
         isClosable: true,
       });
+    }
+  };
+
+  const handleShowAvailableTrekkersClick = async() => {
+    setLoading(true);
+    setShowTrekkers(false);
+    try{
+      const passengerToken = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/driver/available-trekkers",
+        {
+          role: "driver",
+          trekkerId: user.LicensePlate,
+        },
+        {
+          headers: { Authorization: `Bearer ${passengerToken}` },
+        }
+      );
+      setAvailableTrekkers([]); //resetting for managing duplicancy of trekker id
+      setAvailableTrekkers(response.data.availableTrekkers);
+      setShowTrekkers(true);
+    } catch(error) {
+      toast({
+        title: "Error!",
+        description: "Failed to load available trekkers.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -391,11 +428,36 @@ const Dashboard = () => {
                       variant="solid"
                       mb={2}
                       w="full"
+                      onClick={handleShowAvailableTrekkersClick}
                     >
                       Show Available Trekkers
                     </Button>
                   </>
                 )}
+
+                {loading ? (
+                  <Spinner size={"lg"} />
+                ): (
+                  showTrekkers && (
+                    <Box mt={4} w={"full"}>
+                      <Text fontWeight={"bold"} mb={2}>
+                        Available Trekkers
+                      </Text>
+                      <List spacing={2}>
+                        {availableTrekkers.length > 0 ? (
+                          availableTrekkers.map((trekkerId, index) => (
+                            <ListItem key={index}>
+                              Trekker ID: {trekkerId}
+                            </ListItem>
+                          ))
+                        ) : (
+                          <Text>No Trekkers available right now.</Text>
+                        )}
+                      </List>
+                    </Box>
+                  )
+                )}
+
                 {user.role === "Driver" && (
                   <>
                     <Button

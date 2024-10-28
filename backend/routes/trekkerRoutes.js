@@ -25,7 +25,7 @@ module.exports = (trekkerList) => {
   });
 
   //end-point for available trekkers
-  router.get("/available-trekkers", (req, res) => {
+  router.post("/available-trekkers", (req, res) => {
     const availableTrekkers = trekkerList.getAvailableTrekkers();
     res.json({ availableTrekkers });
   });
