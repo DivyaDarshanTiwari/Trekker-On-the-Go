@@ -24,5 +24,11 @@ module.exports = (trekkerList) => {
     res.json({ msg: "Message broadcasted: Driver has reached the college" });
   });
 
+  //end-point for available trekkers
+  router.get("/available-trekkers", (req, res) => {
+    const availableTrekkers = trekkerList.getAvailableTrekkers();
+    res.json({ availableTrekkers });
+  });
+
   return router;
 };
