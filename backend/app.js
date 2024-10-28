@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const TrekkerList = require("./models/trekkerList");
+const trekkerRoute = require("./routes/trekkerRoutes");
 
 const trekkerList = new TrekkerList();
 
@@ -20,7 +21,6 @@ const app = express();
 const morgan = require("morgan");
 
 const studentRoute = require("./routes/studentRoutes");
-const trekkerRoute = require("./routes/trekkerRoutes")(trekkerList); //passed reference of trekkerList
 const corsOptions = {
   origin: "http://localhost:3000", // Replace with your frontend URL
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
@@ -144,6 +144,6 @@ app.post("/login", async (req, res) => {
 });
 
 app.use("/passenger", authenticateToken, passagerRoleVerify, studentRoute);
-app.use("/driver", authenticateToken, driverRoleVerify, trekkerRoute);
+app.use("/driver", authenticateToken, driverRoleVerify, trekkerRoute(trekkerList));
 
 module.exports = app;
