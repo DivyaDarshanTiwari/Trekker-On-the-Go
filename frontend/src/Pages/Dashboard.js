@@ -44,11 +44,12 @@ const Dashboard = () => {
     try {
       const driverToken = localStorage.getItem("token");
       console.log(driverToken);
+      console.log("trekker id: " + user.LicensePlate);
       const response = await axios.post(
         "http://localhost:5000/driver/trekker-go-up",
         {
           role: "driver",
-          trekkerId: user.trekkerId,
+          trekkerId: user.LicensePlate,
         },
         {
           headers: { Authorization: `Bearer ${driverToken}` },
@@ -82,7 +83,7 @@ const Dashboard = () => {
         "http://localhost:5000/driver/reached-college",
         {
           role: "driver",
-          trekkerId: user.trekkerId,
+          trekkerId: user.LicensePlate,
         },
         {
           headers: { Authorization: `Bearer ${driverToken}` },
