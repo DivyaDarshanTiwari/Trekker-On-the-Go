@@ -293,6 +293,13 @@ const Dashboard = () => {
                 <Text fontSize="lg" fontWeight="bold" mb={4}>
                   Functionality
                 </Text>
+                {user.role === "Passenger" && (
+                  <>
+                    <Button colorScheme="teal" variant="solid" mb={2} w="full" onClick={handleOnTheGoClick}>
+                      Request Trekker
+                    </Button>
+                  </>
+                )}
                 {user.role === "Driver" && (
                   <>
                     <Button colorScheme="teal" variant="solid" mb={2} w="full" onClick={handleOnTheGoClick}>
