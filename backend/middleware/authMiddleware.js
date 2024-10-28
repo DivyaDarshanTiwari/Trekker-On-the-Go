@@ -28,7 +28,8 @@ const authenticateToken = (req, res, next) => {
 const passagerRoleVerify = (req, res, next) => {
   try {
     const { role } = req.body;
-    if (role.toLowerCase() === "passenger") {
+    console.log(role);
+    if (role && role.toLowerCase() === "passenger") {
       console.log("Passenger logged in");
       next();
     } else {

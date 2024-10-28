@@ -74,21 +74,28 @@ const Dashboard = () => {
 
   const handleReqTrekkerClick = async () => {
     const requestTime = new Date().toISOString(); //getting real-time for request
+    const passengerToken = localStorage.getItem("token");
     try {
       const response = await axios.post(
         "http://localhost:5000/passenger/request-trekker",
         {
           name: user.name,
           requestTime: requestTime,
+          role: "passenger",
+        },
+        {
+          headers: { Authorization: `Bearer ${passengerToken}` },
         }
       );
-      toast({
-        title: "Success",
-        description: response.data.message,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (response) {
+        toast({
+          title: "Success",
+          description: response.data.message,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       toast({
         title: "Error!",
@@ -158,24 +165,18 @@ const Dashboard = () => {
             <Icon as={FaTools} mr={2} />
             Functionality
           </Link>
-
-          {/* Notification section for the passenger */}
-          {user.role === "Passenger" && (
-            <>
-              <Divider orientation="vertical" borderColor="teal.400" h="24px" />
-              <Link
-                as={RouterLink}
-                to="/notification"
-                fontWeight="bold"
-                _hover={{ textDecoration: "none", color: "teal.200" }}
-                display="flex"
-                alignItems="center"
-              >
-                <Icon as={FaBell} mr={2} />
-                Notifications
-              </Link>
-            </>
-          )}
+          <Divider orientation="vertical" borderColor="teal.400" h="24px" />
+          <Link
+            as={RouterLink}
+            to="/notification"
+            fontWeight="bold"
+            _hover={{ textDecoration: "none", color: "teal.200" }}
+            display="flex"
+            alignItems="center"
+          >
+            <Icon as={FaBell} mr={2} />
+            Notifications
+          </Link>
         </HStack>
 
         <Divider borderColor="gray.300" />

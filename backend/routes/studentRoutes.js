@@ -6,8 +6,9 @@ const { broadcastMessage } = require("../services/notificationService");
 
 const waitingList = new WaitingList();
 
-router.post("request-trekker", (req, res) => {
+router.post("/request-trekker", (req, res) => {
   const { name, requestTime } = req.body;
+  console.log(req.body);
   if (!name || !requestTime) {
     return res.status(400).json({ error: "Details required." });
   }
