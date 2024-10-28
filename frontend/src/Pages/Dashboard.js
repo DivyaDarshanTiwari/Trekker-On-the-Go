@@ -73,6 +73,39 @@ const Dashboard = () => {
     }
   };
 
+  const handleReachedCollegeClick = async () => {
+    try {
+      const driverToken = localStorage.getItem("token");
+      console.log(driverToken);
+      const response = await axios.post(
+        "http://localhost:5000/driver/reached-college",
+        {
+          role: "driver",
+        },
+        {
+          headers: { Authorization: `Bearer ${driverToken}` },
+        }
+      );
+      if (response.data) {
+        toast({
+          title: "Success",
+          description: "Message broadcasted: Driver has reached the College.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to broadcast message.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   const handleReqTrekkerClick = async () => {
     const requestTime = new Date().toISOString(); //getting real-time for request
     const passengerToken = localStorage.getItem("token");
@@ -348,12 +381,32 @@ const Dashboard = () => {
                     </Button>
                   </>
                 )}
-                <Button colorScheme="teal" variant="solid" mb={2} w="full">
-                  Button 2
-                </Button>
-                <Button colorScheme="teal" variant="solid" w="full">
-                  Button 3
-                </Button>
+                {user.role === "Passenger" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleShowAvailableTrekkerClick}
+                    >
+                      Show Available Trekkers
+                    </Button>
+                  </>
+                )}
+                {user.role === "Driver" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleReachedCollegeClick}
+                    >
+                      Reached College
+                    </Button>
+                  </>
+                )}
               </Box>
             }
           />
