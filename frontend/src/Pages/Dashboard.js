@@ -48,6 +48,7 @@ const Dashboard = () => {
         "http://localhost:5000/driver/trekker-go-up",
         {
           role: "driver",
+          trekkerId: user.trekkerId,
         },
         {
           headers: { Authorization: `Bearer ${driverToken}` },
@@ -81,6 +82,7 @@ const Dashboard = () => {
         "http://localhost:5000/driver/reached-college",
         {
           role: "driver",
+          trekkerId: user.trekkerId,
         },
         {
           headers: { Authorization: `Bearer ${driverToken}` },

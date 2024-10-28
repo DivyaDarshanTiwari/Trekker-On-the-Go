@@ -1,8 +1,8 @@
 //node for the doubly linked list, containing status and id
 class TrekkerNode {
     constructor(trekkerId, status = 'available') {
-        trekkerId = this.trekkerId;
-        status = this.status;
+        this.trekkerId = trekkerId;
+        this.status = status;
         this.next = null;
         this.prev = null;
     }
@@ -70,4 +70,14 @@ class TrekkerList {
         }
         return availableTrekkers;
     }
+
+    displayList() {
+        let current = this.head;
+        while(current) {
+            console.log(current.trekkerId + " " + current.status);
+            current = current.next;
+        }
+    }
 }
+
+module.exports = TrekkerList;

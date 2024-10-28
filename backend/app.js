@@ -6,6 +6,9 @@ const Collective_Data = require("./models/CollectiveDatabase");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const TrekkerList = require("./models/trekkerList");
+
+const trekkerList = new TrekkerList();
 
 const {
   authenticateToken,
@@ -17,7 +20,7 @@ const app = express();
 const morgan = require("morgan");
 
 const studentRoute = require("./routes/studentRoutes");
-const trekkerRoute = require("./routes/trekkerRoutes");
+const trekkerRoute = require("./routes/trekkerRoutes")(trekkerList); //passed reference of trekkerList
 const corsOptions = {
   origin: "http://localhost:3000", // Replace with your frontend URL
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
@@ -131,6 +134,7 @@ app.post("/login", async (req, res) => {
 
     if (user.role.toLowerCase() === "driver") {
       user = await Driver.findOne({ Email });
+      trekkerList.addTrekker(user.LicensePlate);
     }
 
     res.status(200).json({ token: token, role: user.role, data: user });
