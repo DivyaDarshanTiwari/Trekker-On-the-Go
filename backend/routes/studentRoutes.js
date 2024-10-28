@@ -13,6 +13,7 @@ router.post("request-trekker", (req, res) => {
   }
 
   waitingList.addPassenger(name, requestTime);
+  waitingList.displayList();
   const message = `${name} has requested a trekker at ${requestTime}`;
   broadcastMessage(message);
   res.status(200).json({ message: "Request received and broadcasted" });

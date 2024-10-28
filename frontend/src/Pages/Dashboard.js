@@ -39,7 +39,7 @@ const Dashboard = () => {
     }
   }, [navigate, location]);
 
-  const handleOnTheGoClick = async() => {
+  const handleOnTheGoClick = async () => {
     try {
       const driverToken = localStorage.getItem("token");
       console.log(driverToken);
@@ -52,7 +52,7 @@ const Dashboard = () => {
           headers: { Authorization: `Bearer ${driverToken}` },
         }
       );
-      if(response.data) {
+      if (response.data) {
         toast({
           title: "Success",
           description: "Message broadcasted: Driver is on the move.",
@@ -61,7 +61,7 @@ const Dashboard = () => {
           isClosable: true,
         });
       }
-    } catch(error) {
+    } catch (error) {
       toast({
         title: "Error!",
         description: "Failed to broadcast message.",
@@ -70,7 +70,35 @@ const Dashboard = () => {
         isClosable: true,
       });
     }
-  }
+  };
+
+  const handleReqTrekkerClick = async () => {
+    const requestTime = new Date().toISOString(); //getting real-time for request
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/passenger/request-trekker",
+        {
+          name: user.name,
+          requestTime: requestTime,
+        }
+      );
+      toast({
+        title: "Success",
+        description: response.data.message,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to request trekker.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Flex
@@ -148,7 +176,6 @@ const Dashboard = () => {
               </Link>
             </>
           )}
-
         </HStack>
 
         <Divider borderColor="gray.300" />
@@ -295,14 +322,26 @@ const Dashboard = () => {
                 </Text>
                 {user.role === "Passenger" && (
                   <>
-                    <Button colorScheme="teal" variant="solid" mb={2} w="full" onClick={handleOnTheGoClick}>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleReqTrekkerClick}
+                    >
                       Request Trekker
                     </Button>
                   </>
                 )}
                 {user.role === "Driver" && (
                   <>
-                    <Button colorScheme="teal" variant="solid" mb={2} w="full" onClick={handleOnTheGoClick}>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleOnTheGoClick}
+                    >
                       On the Go
                     </Button>
                   </>
