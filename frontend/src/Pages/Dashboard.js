@@ -388,7 +388,6 @@ const Dashboard = () => {
                       variant="solid"
                       mb={2}
                       w="full"
-                      onClick={handleShowAvailableTrekkerClick}
                     >
                       Show Available Trekkers
                     </Button>

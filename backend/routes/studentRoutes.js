@@ -3,8 +3,6 @@ const router = express.Router();
 const Passenger = require("../models/student");
 const { broadcastMessage } = require("../services/notificationService");
 
-const waitingList = new WaitingList();
-
 router.post("/request-trekker", (req, res) => {
   const { name, requestTime } = req.body;
   console.log(req.body);
