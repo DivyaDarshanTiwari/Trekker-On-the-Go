@@ -30,6 +30,22 @@ const Signup = ({ setTabIndex }) => {
   const handleClick = () => setShow(!show);
 
   const submitHandler = async () => {
+    //validating phone no
+    const phoneNoRegEx = /^[0-9][10]$/;
+    if (!phoneNoRegEx.test(phoneNo)) {
+      alert(
+        "Phone number must be of 10 digits and should contain only numbers."
+      );
+      return;
+    }
+
+    //validating license plate for driver
+    const licensePlateRegEx = /^[A-Za-z]{2}[0-9]{2}[A-Za-z]{1,2}[0-9]{4}$/i;
+    if (role === "Driver" && !licensePlateRegEx.test(LicensePlate)) {
+      alert("License plate is not in proper format.");
+      return;
+    }
+
     if (password !== confirmpassword) {
       alert("Passwords do not match");
       return;

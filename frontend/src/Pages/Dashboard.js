@@ -8,9 +8,11 @@ import {
   Link,
   Flex,
   Icon,
+  useToast, //using for feedback
 } from "@chakra-ui/react";
-import { FaUser, FaTools } from "react-icons/fa"; // Add icons for profile and functionality
+import { FaUser, FaTools, FaBell } from "react-icons/fa"; // Add icons for profile and functionality
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   useNavigate,
   Link as RouterLink,
@@ -23,6 +25,7 @@ const Dashboard = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("User_Data");
@@ -35,6 +38,74 @@ const Dashboard = () => {
       navigate("/dashboard/profile");
     }
   }, [navigate, location]);
+
+  const handleOnTheGoClick = async () => {
+    try {
+      const driverToken = localStorage.getItem("token");
+      console.log(driverToken);
+      const response = await axios.post(
+        "http://localhost:5000/driver/trekker-go-up",
+        {
+          role: "driver",
+        },
+        {
+          headers: { Authorization: `Bearer ${driverToken}` },
+        }
+      );
+      if (response.data) {
+        toast({
+          title: "Success",
+          description: "Message broadcasted: Driver is on the move.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to broadcast message.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleReqTrekkerClick = async () => {
+    const requestTime = new Date().toISOString(); //getting real-time for request
+    const passengerToken = localStorage.getItem("token");
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/passenger/request-trekker",
+        {
+          name: user.name,
+          requestTime: requestTime,
+          role: "passenger",
+        },
+        {
+          headers: { Authorization: `Bearer ${passengerToken}` },
+        }
+      );
+      if (response) {
+        toast({
+          title: "Success",
+          description: response.data.message,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to request trekker.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   return (
     <Flex
@@ -93,6 +164,18 @@ const Dashboard = () => {
           >
             <Icon as={FaTools} mr={2} />
             Functionality
+          </Link>
+          <Divider orientation="vertical" borderColor="teal.400" h="24px" />
+          <Link
+            as={RouterLink}
+            to="/notification"
+            fontWeight="bold"
+            _hover={{ textDecoration: "none", color: "teal.200" }}
+            display="flex"
+            alignItems="center"
+          >
+            <Icon as={FaBell} mr={2} />
+            Notifications
           </Link>
         </HStack>
 
@@ -238,9 +321,32 @@ const Dashboard = () => {
                 <Text fontSize="lg" fontWeight="bold" mb={4}>
                   Functionality
                 </Text>
-                <Button colorScheme="teal" variant="solid" mb={2} w="full">
-                  Button 1
-                </Button>
+                {user.role === "Passenger" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleReqTrekkerClick}
+                    >
+                      Request Trekker
+                    </Button>
+                  </>
+                )}
+                {user.role === "Driver" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleOnTheGoClick}
+                    >
+                      On the Go
+                    </Button>
+                  </>
+                )}
                 <Button colorScheme="teal" variant="solid" mb={2} w="full">
                   Button 2
                 </Button>
