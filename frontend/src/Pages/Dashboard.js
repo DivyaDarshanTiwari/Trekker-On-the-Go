@@ -12,7 +12,6 @@ import {
   List,
   ListItem,
   Spinner,
-  Badge,
 } from "@chakra-ui/react";
 import { FaUser, FaTools, FaBell } from "react-icons/fa"; // Add icons for profile and functionality
 import React, { useState, useEffect } from "react";
