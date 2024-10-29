@@ -1,111 +1,218 @@
-/* Global Styles */
-body {
-  font-family: Arial, sans-serif;
+/* General Reset */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  overflow-x: hidden;
 }
 
 .landing-page {
   text-align: center;
 }
 
+/* Navbar Styles */
 .navbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem 2rem;
-  background-color: #ffffff00;
-  color: rgb(0, 0, 0);
+  background-color: transparent;
+  color: #fff;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: #fff;
+  font-weight: bold;
 }
 
 .nav-links {
-  list-style-type: none;
+  list-style: none;
+  display: flex;
 }
 
 .nav-links li {
-  padding: 0.5rem;
-  border-radius: 1rem;
-  display: inline;
   margin-left: 20px;
 }
 
-.nav-links li:hover {
-  background-color: #33333348;
-}
-
 .nav-links a {
-  color: rgb(0, 0, 0);
+  color: white;
   text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
+.nav-links a:hover {
+  color: #f04e23;
+}
+
+/* Hero Section */
 .hero {
-  background: url("https://example.com/trekker-bg.jpg") no-repeat center
-    center/cover;
+  background: linear-gradient(rgba(58, 110, 165, 0.6), rgba(58, 110, 165, 0.6)),
+    url("https://example.com/trekker-bg.jpg") no-repeat center center/cover;
   color: white;
-  padding: 100px 0;
+  padding: 160px 0;
   text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-content h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
 }
 
 .hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  max-width: 750px;
+  margin: 0 auto;
 }
 
 .cta-button {
   background-color: #f04e23;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 28px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  position: relative;
+  top: 30px;
+  right: 7px;
 }
 
 .cta-button:hover {
-  background-color: #c03e1b;
+  background-color: #ff9b5e;
 }
 
-.features {
-  padding: 50px 20px;
+/* Curved Divider Between Sections */
+.curved-divider {
   background-color: #f9f9f9;
+  position: relative;
+  padding-top: 50px;
+}
+
+.curved-divider::before {
+  content: "";
+  background-color: #3a6ea5;
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  top: -100px;
+  left: 0;
+  border-radius: 50% 50% 0 0;
+}
+
+/* Features Section */
+.features {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+}
+
+.features h2 {
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+  color: #3a6ea5;
 }
 
 .features-grid {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: space-around;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .feature-item {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 25px;
   width: 30%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(45deg, #ff9b5e, #f04e23);
 }
 
 .feature-item h3 {
   color: #f04e23;
+  margin-bottom: 1.2rem;
 }
 
+.feature-item p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* About Section */
 .about {
-  padding: 50px 20px;
-  background-color: #e9ecef;
-}
-
-.footer {
-  padding: 20px;
-  background-color: #333;
+  padding: 80px 20px;
+  background-color: #3a6ea5;
   color: white;
 }
 
+.about h2 {
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+}
+
+.about p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Footer Section */
+.footer {
+  padding: 50px 20px;
+  background-color: #333;
+  color: white;
+  position: relative;
+}
+
+.footer h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -118,7 +225,6 @@ body {
     text-align: right;
   }
 
-  /* Show menu when menu-toggle is clicked */
   .nav-links.open {
     display: flex;
   }
@@ -127,121 +233,16 @@ body {
     margin: 15px 0;
   }
 
-  .menu-toggle {
-    display: inline-block;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
+  .hero-content h2 {
+    font-size: 2.5rem;
   }
 
-  .hamburger {
-    display: block;
-    width: 25px;
-    height: 2px;
-    background-color: white;
-    position: relative;
+  .features-grid {
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .hamburger::before,
-  .hamburger::after {
-    content: "";
-    width: 25px;
-    height: 2px;
-    background-color: white;
-    position: absolute;
-    left: 0;
-    transition: 0.3s ease;
+  .feature-item {
+    width: 100%;
   }
-
-  .hamburger::before {
-    top: -8px;
-  }
-
-  .hamburger::after {
-    top: 8px;
-  }
-
-  .menu-toggle.active .hamburger {
-    background-color: transparent;
-  }
-
-  .menu-toggle.active .hamburger::before {
-    transform: rotate(45deg);
-    top: 0;
-  }
-
-  .menu-toggle.active .hamburger::after {
-    transform: rotate(-45deg);
-    top: 0;
-  }
-}
-
-/* Hero Section */
-.hero {
-  background: url("https://example.com/trekker-bg.jpg") no-repeat center
-    center/cover;
-  color: white;
-  padding: 100px 0;
-  text-align: center;
-}
-
-.hero-content h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
-
-.cta-button {
-  background-color: #f04e23;
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-.cta-button:hover {
-  background-color: #c03e1b;
-}
-
-/* Features Section */
-.features {
-  padding: 50px 20px;
-  background-color: #f9f9f9;
-}
-
-.features-grid {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.feature-item {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  width: 30%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.feature-item h3 {
-  color: #f04e23;
-}
-
-/* About Section */
-.about {
-  padding: 50px 20px;
-  background-color: #e9ecef;
-}
-
-/* Footer */
-.footer {
-  padding: 20px;
-  background-color: #333;
-  color: white;
 }
