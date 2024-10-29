@@ -1,6 +1,6 @@
 //node for the doubly linked list, containing status and id
 class TrekkerNode {
-    constructor(trekkerId, status = 'available') {
+    constructor(trekkerId, status = 'not-available') {
         this.trekkerId = trekkerId;
         this.status = status;
         this.next = null;

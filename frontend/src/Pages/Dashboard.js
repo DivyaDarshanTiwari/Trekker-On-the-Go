@@ -82,6 +82,41 @@ const Dashboard = () => {
     }
   };
 
+  const handleOnTheGoFromCollegeClick = async () => {
+    try {
+      const driverToken = localStorage.getItem("token");
+      console.log(driverToken);
+      console.log("trekker id: " + user.LicensePlate);
+      const response = await axios.post(
+        "http://localhost:5000/driver/trekker-go-down",
+        {
+          role: "driver",
+          trekkerId: user.LicensePlate,
+        },
+        {
+          headers: { Authorization: `Bearer ${driverToken}` },
+        }
+      );
+      if (response.data) {
+        toast({
+          title: "Success",
+          description: "Message broadcasted: Driver is on the move.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description: "Failed to broadcast message.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   const handleReachedCollegeClick = async () => {
     try {
       const driverToken = localStorage.getItem("token");
@@ -434,7 +469,7 @@ const Dashboard = () => {
                       w="full"
                       onClick={handleOnTheGoClick}
                     >
-                      On the Go
+                      On the Go to College
                     </Button>
                   </>
                 )}
@@ -474,7 +509,19 @@ const Dashboard = () => {
                     </Box>
                   )
                 )}
-
+                {user.role === "Driver" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleOnTheGoFromCollegeClick}
+                    >
+                      On the Go from College
+                    </Button>
+                  </>
+                )}
                 {user.role === "Driver" && (
                   <>
                     <Button

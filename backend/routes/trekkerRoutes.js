@@ -15,6 +15,17 @@ module.exports = (trekkerList) => {
     });
   });
 
+  router.post("/trekker-go-down", (req, res) => {
+    const id = req.driverId;
+    const trekkerId = req.body.trekkerId;
+    trekkerList.updateTrekkerStatus(trekkerId, "on the go");
+    trekkerList.displayList();
+    broadcastMessage("A driver is on the move from the college", id);
+    res.json({
+      msg: "Message broadcasted: Driver is on the move from the college",
+    });
+  });
+
   router.post("/reached-college", (req, res) => {
     const id = req.driverId;
     const trekkerId = req.body.trekkerId;
