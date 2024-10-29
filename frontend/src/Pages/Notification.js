@@ -1,34 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useNotifications } from "../GlobalCompnent/notificationContext";
 import "../CSS/Notification.css"; // Make sure to include the CSS
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState([]);
+  const { notifications, markAllAsRead } = useNotifications();
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:5000");
-
-    ws.onmessage = (event) => {
-      try {
-        const notification = JSON.parse(event.data);
-        if (notification.message && notification.date) {
-          setNotifications((prevNotifications) => [
-            ...prevNotifications,
-            notification,
-          ]);
-        }
-      } catch (error) {
-        console.error("Error parsing WebSocket message:", error);
-      }
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket disconnected");
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, []);
+    markAllAsRead(); // Reset unread count when viewing notifications
+  }, [markAllAsRead]);
 
   return (
     <div className="notifications-container">

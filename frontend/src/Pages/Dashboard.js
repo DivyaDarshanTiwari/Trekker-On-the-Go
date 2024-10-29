@@ -24,6 +24,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import Notifications from "./Notification";
+import NotificationBadge from "./NotificationBadge";
 
 const Dashboard = () => {
   const [user, setUser] = useState({});
@@ -150,10 +151,10 @@ const Dashboard = () => {
     }
   };
 
-  const handleShowAvailableTrekkersClick = async() => {
+  const handleShowAvailableTrekkersClick = async () => {
     setLoading(true);
     setShowTrekkers(false);
-    try{
+    try {
       const passengerToken = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:5000/driver/available-trekkers",
@@ -168,7 +169,7 @@ const Dashboard = () => {
       setAvailableTrekkers([]); //resetting for managing duplicancy of trekker id
       setAvailableTrekkers(response.data.availableTrekkers);
       setShowTrekkers(true);
-    } catch(error) {
+    } catch (error) {
       toast({
         title: "Error!",
         description: "Failed to load available trekkers.",
@@ -250,6 +251,22 @@ const Dashboard = () => {
           >
             <Icon as={FaBell} mr={2} />
             Notifications
+            <NotificationBadge />
+            {/* {notificationCount > 0 && (
+              <Badge
+                ml={1}
+                colorScheme="red"
+                borderRadius="full"
+                px={2}
+                fontSize="0.8em"
+                position="absolute" // Position the badge on the top-right of the notification icon
+                top="0" // Adjust the position vertically
+                right="-10px" // Adjust the position horizontally
+              >
+                {notificationCount} // The badge displays the count of unread
+                notifications
+              </Badge>
+            )} */}
           </Link>
         </HStack>
 
@@ -437,7 +454,7 @@ const Dashboard = () => {
 
                 {loading ? (
                   <Spinner size={"lg"} />
-                ): (
+                ) : (
                   showTrekkers && (
                     <Box mt={4} w={"full"}>
                       <Text fontWeight={"bold"} mb={2}>
@@ -474,11 +491,7 @@ const Dashboard = () => {
               </Box>
             }
           />
-          <Route
-            path="/notification"
-            element={<Notifications />}
-          >
-          </Route>
+          <Route path="/notification" element={<Notifications />}></Route>
         </Routes>
       </VStack>
     </Flex>
