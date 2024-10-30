@@ -29,8 +29,10 @@ import NotificationBadge from "./NotificationBadge";
 const Dashboard = () => {
   const [user, setUser] = useState({});
   const [availableTrekkers, setAvailableTrekkers] = useState([]);
+  const [availableStudents, setAvailableStudents] = useState({});
   const [loading, setLoading] = useState(false);
   const [showTrekkers, setShowTrekkers] = useState(false);
+  const [showStudent, setShowStudent] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
@@ -151,6 +153,26 @@ const Dashboard = () => {
     }
   };
 
+  const handleReqStudentNumberClick = async () => {
+    try {
+      const driverToken = localStorage.getItem("token");
+      console.log(driverToken);
+      const response = await axios.post(
+        "http://localhost:5000/driver/available-students",
+        {
+          role: "driver",
+        },
+        {
+          headers: { Authorization: `Bearer ${driverToken}` },
+        }
+      );
+      setAvailableStudents(response.data.availableStudents);
+      setShowStudent(true);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const handleReqTrekkerClick = async () => {
     const requestTime = new Date().toISOString(); //getting real-time for request
     const passengerToken = localStorage.getItem("token");
@@ -158,6 +180,7 @@ const Dashboard = () => {
       const response = await axios.post(
         "http://localhost:5000/passenger/request-trekker",
         {
+          Id: user.SAP_DL_ID,
           name: user.name,
           requestTime: requestTime,
           role: "passenger",
@@ -287,21 +310,6 @@ const Dashboard = () => {
             <Icon as={FaBell} mr={2} />
             Notifications
             <NotificationBadge />
-            {/* {notificationCount > 0 && (
-              <Badge
-                ml={1}
-                colorScheme="red"
-                borderRadius="full"
-                px={2}
-                fontSize="0.8em"
-                position="absolute" // Position the badge on the top-right of the notification icon
-                top="0" // Adjust the position vertically
-                right="-10px" // Adjust the position horizontally
-              >
-                {notificationCount} // The badge displays the count of unread
-                notifications
-              </Badge>
-            )} */}
           </Link>
         </HStack>
 
@@ -534,6 +542,35 @@ const Dashboard = () => {
                       Reached College
                     </Button>
                   </>
+                )}
+                {user.role === "Driver" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleReqStudentNumberClick}
+                    >
+                      Available Students
+                    </Button>
+                  </>
+                )}
+                {loading ? (
+                  <Spinner size={"lg"} />
+                ) : (
+                  showStudent && (
+                    <Box mt={4} w={"full"}>
+                      <Text fontWeight={"bold"} mb={2}>
+                        Available Students
+                      </Text>
+                      <Text>
+                        {availableStudents > 0
+                          ? `Number of available students: ${availableStudents}`
+                          : "No students are available right now."}
+                      </Text>
+                    </Box>
+                  )
                 )}
               </Box>
             }

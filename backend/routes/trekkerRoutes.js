@@ -3,7 +3,7 @@ const router = express.Router();
 const Driver = require("../models/trekker");
 const { broadcastMessage } = require("../services/notificationService");
 
-module.exports = (trekkerList) => {
+module.exports = (trekkerList, studentSet) => {
   router.post("/trekker-go-up", (req, res) => {
     const id = req.driverId;
     const trekkerId = req.body.trekkerId;
@@ -39,6 +39,15 @@ module.exports = (trekkerList) => {
   router.post("/available-trekkers", (req, res) => {
     const availableTrekkers = trekkerList.getAvailableTrekkers();
     res.json({ availableTrekkers });
+  });
+
+  router.post("/available-students", (req, res) => {
+    try {
+      const availableStudents = studentSet.size();
+      res.json({ availableStudents });
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   return router;
