@@ -8,8 +8,10 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const TrekkerList = require("./models/trekkerList");
 const trekkerRoute = require("./routes/trekkerRoutes");
+const StudentSet = require("./models/StudentList");
 
 const trekkerList = new TrekkerList();
+const studentSet = new StudentSet();
 
 const {
   authenticateToken,
@@ -114,23 +116,18 @@ app.post("/login", async (req, res) => {
   console.log(req.body);
   try {
     let user = await Collective_Data.findOne({ Email });
-    console.log("user dATA" + user);
     if (!user) {
       return res.status(400).send("User does not exist.");
     }
-    console.log("1");
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("2" + isMatch);
     if (!isMatch) {
       return res.status(400).send("Invalid password");
     }
-    console.log("3");
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    console.log("4");
 
     if (user.role.toLowerCase() === "driver") {
       user = await Driver.findOne({ Email });
@@ -143,7 +140,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.use("/passenger", authenticateToken, passagerRoleVerify, studentRoute);
-app.use("/driver", authenticateToken, driverRoleVerify, trekkerRoute(trekkerList));
+app.use(
+  "/passenger",
+  authenticateToken,
+  passagerRoleVerify,
+  studentRoute(studentSet)
+);
+app.use(
+  "/driver",
+  authenticateToken,
+  driverRoleVerify,
+  trekkerRoute(trekkerList, studentSet)
+);
 
 module.exports = app;
