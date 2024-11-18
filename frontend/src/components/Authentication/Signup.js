@@ -31,7 +31,7 @@ const Signup = ({ setTabIndex }) => {
 
   const submitHandler = async () => {
     //validating phone no
-    const phoneNoRegEx = /^[0-9][10]$/;
+    const phoneNoRegEx = /^[0-9]{10}$/;
     if (!phoneNoRegEx.test(phoneNo)) {
       alert(
         "Phone number must be of 10 digits and should contain only numbers."
