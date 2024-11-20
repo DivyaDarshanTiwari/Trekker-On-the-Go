@@ -7,7 +7,7 @@ module.exports = (studentSet) => {
   router.post("/request-trekker", (req, res) => {
     const { Id, name, requestTime } = req.body;
 
-    if (studentSet.has(Id)) {
+    if (!studentSet.has(Id)) {
       const message = `${name} has requested a trekker at ${requestTime}`;
       broadcastMessage(message);
       res.status(200).json({ message: "Request received and broadcasted" });
