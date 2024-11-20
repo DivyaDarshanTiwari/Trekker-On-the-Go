@@ -198,6 +198,21 @@ const Dashboard = () => {
           isClosable: true,
         });
       }
+
+      //fetching number of students waiting
+      const studentResponse = await axios.post(
+        "http://localhost:5000/driver/available-students",
+        {
+          role: "driver",
+        },
+        {
+          headers: { Authorization: `Bearer ${passengerToken}` },
+        }
+      );
+
+      // Update the state with the available students and show the student section
+      setAvailableStudents(studentResponse.data.availableStudents);
+      setShowStudent(true);
     } catch (error) {
       toast({
         title: "Error!",
