@@ -33,6 +33,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [showTrekkers, setShowTrekkers] = useState(false);
   const [showStudent, setShowStudent] = useState(false);
+  const [trekkerStatus, setTrekkerStatus] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
@@ -50,6 +51,17 @@ const Dashboard = () => {
   }, [navigate, location]);
 
   const handleOnTheGoClick = async () => {
+    //checking if trekker is already at college
+    if(trekkerStatus === "OnTheGo" || trekkerStatus === "AtCollege") {
+      toast({
+        title: "Action not allowed",
+        description: "You are already on the way to college or at the college.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     try {
       const driverToken = localStorage.getItem("token");
       console.log(driverToken);
@@ -65,6 +77,7 @@ const Dashboard = () => {
         }
       );
       if (response.data) {
+        setTrekkerStatus("OnTheGo");
         toast({
           title: "Success",
           description: "Message broadcasted: Driver is on the move.",
@@ -85,6 +98,16 @@ const Dashboard = () => {
   };
 
   const handleOnTheGoFromCollegeClick = async () => {
+    if(trekkerStatus === "FromCollege" || trekkerStatus === "OnTheGo") {
+      toast({
+        title: "Action not allowed",
+        description: "You are already on the way from college.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     try {
       const driverToken = localStorage.getItem("token");
       console.log(driverToken);
@@ -100,6 +123,7 @@ const Dashboard = () => {
         }
       );
       if (response.data) {
+        setTrekkerStatus("FromCollege")
         toast({
           title: "Success",
           description: "Message broadcasted: Driver is on the move.",
@@ -120,6 +144,16 @@ const Dashboard = () => {
   };
 
   const handleReachedCollegeClick = async () => {
+    if(trekkerStatus === "AtCollege" || trekkerStatus === "FromCollege") {
+      toast({
+        title: "Action not allowed",
+        description: "You are at college gate.",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
     try {
       const driverToken = localStorage.getItem("token");
       console.log(driverToken);
@@ -134,6 +168,7 @@ const Dashboard = () => {
         }
       );
       if (response.data) {
+        setTrekkerStatus("AtCollege");
         toast({
           title: "Success",
           description: "Message broadcasted: Driver has reached the College.",
