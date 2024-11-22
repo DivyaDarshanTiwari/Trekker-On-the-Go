@@ -41,11 +41,12 @@ class TrekkerList {
     }
 
     //adding trekker while logging in
-    addTrekker(trekkerId) {
+    addTrekker(trekkerId, capacity = 12) {
         //checking if node with same id already exists
         if(this.trekkerMap[trekkerId]) return ;
+        if(capacity <= 0) capacity = 12;
 
-        const newTrekker = new TrekkerNode(trekkerId);
+        const newTrekker = new TrekkerNode(trekkerId, capacity);
         this.trekkerMap[trekkerId] = newTrekker;
 
         //if it is an empty list
@@ -62,6 +63,22 @@ class TrekkerList {
     updateTrekkerStatus(trekkerId, status) {
         const trekkerNode = this.trekkerMap[trekkerId];
         if(trekkerNode) trekkerNode.status = status;
+    }
+
+    //addign student to trekker
+    addStudentToTrekker(trekkerId) {
+        const trekkerNode = this.trekkerMap[trekkerId];
+        if(!trekkerNode) return { message: "Trekker not found!" }
+        if(trekkerNode && trekkerNode.addStudent()) return { message: "Student added to the trekker successfully!" };
+        return { message: "Trekker is full!" };
+    }
+
+    //removing student from trekker
+    removeStudentFromTrekker(trekkerId) {
+        const trekkerNode = this.trekkerMap[trekkerId];
+        if(!trekkerNode) return { message: "Trekker not found!" }
+        if(trekkerNode && trekkerNode.removeStudent()) return { message: "Student removed successfully!" };
+        return { message: "Trekker is empty!" };
     }
 
     //removing trekker from list on logging out
@@ -91,7 +108,12 @@ class TrekkerList {
         let current = this.head;
         const availableTrekkers = [];
         while(current) {
-            if(current.status === 'available') availableTrekkers.push(current.trekkerId);
+            if(current.status === 'available') {
+                availableTrekkers.push({
+                    trekkerId: current.trekkerId,
+                    availableSeats: current.getAvailableSeats(),
+                });
+            }
             current = current.next;
         }
         return availableTrekkers;
@@ -100,7 +122,7 @@ class TrekkerList {
     displayList() {
         let current = this.head;
         while(current) {
-            console.log(current.trekkerId + " " + current.status);
+            console.log(`${current.trekkerId} ${current.status} (Seats left: ${current.getAvailableSeats()})`);
             current = current.next;
         }
     }
