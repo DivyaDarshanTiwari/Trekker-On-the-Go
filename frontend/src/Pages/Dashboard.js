@@ -304,10 +304,46 @@ const Dashboard = () => {
         }
       );
 
-      if (response.data) {  
+      if (response.data) {
         toast({
           title: "Success",
           description: `Student added successfully!`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error!",
+        description:
+          error.response?.data?.message ||
+          "Failed to add student. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleRemoveStudentClick = async() => {
+    try {
+      const driverToken = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:5000/driver/remove-student-from-trekker",
+        {
+          role: "driver",
+          trekkerId: user.LicensePlate,
+        },
+        {
+          headers: { Authorization: `Bearer ${driverToken}` }
+        }
+      );
+
+      if (response.data) {
+        toast({
+          title: "Success",
+          description: `Student removed successfully!`,
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -640,6 +676,32 @@ const Dashboard = () => {
                       variant="solid"
                       mb={2}
                       w="full"
+                      onClick={handleAddStudentClick}
+                    >
+                      Add Student to Trekker
+                    </Button>
+                  </>
+                )}
+                {user.role === "Driver" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
+                      onClick={handleRemoveStudentClick}
+                    >
+                      Remove Student from Trekker
+                    </Button>
+                  </>
+                )}
+                {user.role === "Driver" && (
+                  <>
+                    <Button
+                      colorScheme="teal"
+                      variant="solid"
+                      mb={2}
+                      w="full"
                       onClick={handleReqStudentNumberClick}
                     >
                       Available Students
@@ -661,19 +723,6 @@ const Dashboard = () => {
                       </Text>
                     </Box>
                   )
-                )}
-                {user.role === "Driver" && (
-                  <>
-                    <Button
-                      colorScheme="teal"
-                      variant="solid"
-                      mb={2}
-                      w="full"
-                      onClick={handleAddStudentClick}
-                    >
-                      Add Student to Trekker
-                    </Button>
-                  </>
                 )}
               </Box>
             }
