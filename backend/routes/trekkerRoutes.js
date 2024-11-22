@@ -50,5 +50,23 @@ module.exports = (trekkerList, studentSet) => {
     }
   });
 
+  //end-point for adding student in trekker
+  router.post("/add-student-to-trekker", (req, res) => {
+    try {
+      const trekkerId = req.body.trekkerId;
+      if(!trekkerId) return res.status(400).json({ msg: "Trekker ID not found!" });
+      const result = trekkerList.addStudentToTrekker(trekkerId);
+      console.log(result);
+      if(result.message === "Student added to the trekker successfully!") {
+        trekkerList.displayList();
+        return res.status(200).json({ msg: result.message });
+      }
+      res.status(400).json({ msg: result.message });
+    } catch(err) {
+      console.log(err);
+      res.status(500).json({ msg: "An error occurred whiled adding the student" });
+    }
+  });
+
   return router;
 };
