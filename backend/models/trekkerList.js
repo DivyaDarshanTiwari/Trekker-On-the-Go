@@ -1,10 +1,33 @@
 //node for the doubly linked list, containing status and id
 class TrekkerNode {
-    constructor(trekkerId, status = 'not-available') {
+    constructor(trekkerId, capacity = 12, status = 'not-available') {
         this.trekkerId = trekkerId;
         this.status = status;
+        this.capacity = capacity // MaxCapacity of the trekker (by default 12)
+        this.studentsInTrekker = 0; // no of students in trekker currently
         this.next = null;
         this.prev = null;
+    }
+
+    //adding the students in trekker
+    addStudent() {
+        if(this.studentsInTrekker < this.capacity) {
+            this.studentsInTrekker += 1;
+            return true;
+        }
+        return false; //that student cant be added hence false
+    }
+
+    removeStudent() {
+        if(this.studentsInTrekker > 0) {
+            this.studentsInTrekker -= 1;
+            return true;
+        }
+        return false;
+    }
+
+    getAvailableSeats() {
+        return this.capacity - this.studentsInTrekker;
     }
 }
 
