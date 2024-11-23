@@ -71,6 +71,11 @@ Contributors are welcome!
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ### 8. Contact
-* Name: Vyom Singhal
-* Email: [vilsium28@gmail.com](vilsium28@gmail.com)
-* Github: [https://github.com/Vilsium](https://github.com/Vilsium)
+1. Contributor 1:
+ * Name: Vyom Singhal
+ * Email: [vilsium28@gmail.com](vilsium28@gmail.com)
+ * Github: [https://github.com/Vilsium](https://github.com/Vilsium)
+2. Contributor 2:
+ * Name: Divya Darshan Tiwari
+ * Email: [ddarshantiwari@gmail.com](ddarshantiwari@gmail.com)
+ * Github: [https://github.com/DivyaDarshanTiwari](https://github.com/DivyaDarshanTiwari)
